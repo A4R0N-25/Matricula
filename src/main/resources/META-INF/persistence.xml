@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="matricula1_pu" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ec.edu.espe.distribuidas.matricula.model.Prerequisito</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.CarreraCurso</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.DetalleMatricula</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Curso</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Estudiante</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Matricula</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Asignatura</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Horario</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Carrera</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.Periodo</class>
+    <class>ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodo</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
