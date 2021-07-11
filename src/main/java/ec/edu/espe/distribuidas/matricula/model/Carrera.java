@@ -19,6 +19,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,7 +46,10 @@ public class Carrera implements Serializable {
     
     @Column(name = "niveles", nullable = false)
     private short niveles;
-   
+    
+    @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    private Departamento departamento;
 
     public Carrera() {
     }
@@ -84,6 +89,16 @@ public class Carrera implements Serializable {
     public void setNiveles(short niveles) {
         this.niveles = niveles;
     }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+    
+    
 
     @Override
     public int hashCode() {

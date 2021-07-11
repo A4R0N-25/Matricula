@@ -19,6 +19,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,6 +43,10 @@ public class Asignatura implements Serializable {
   
     @Column(name = "creditos", nullable = false)
     private short creditos;
+    
+    @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    private Departamento departamento;
     /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
     private List<Prerequisito> prerequisitos;*/
@@ -76,6 +82,15 @@ public class Asignatura implements Serializable {
         this.creditos = creditos;
     }
 
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+    
+    
     /*public List<Prerequisito> getPrerequisitos() {
         return prerequisitos;
     }

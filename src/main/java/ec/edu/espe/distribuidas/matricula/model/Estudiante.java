@@ -53,6 +53,12 @@ public class Estudiante implements Serializable {
 
     @Column(name = "apellido", nullable = false, length = 50)
     private String apellido;
+    
+    @Column(name = "correo", nullable = false, length = 50)
+    private String correo;
+    
+    @Column(name = "contraseña", nullable = false, length = 260)
+    private String contraseña;
 
     @Column(name = "genero", nullable = false, length = 3)
     private String genero;
@@ -123,6 +129,22 @@ public class Estudiante implements Serializable {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public String getGenero() {
