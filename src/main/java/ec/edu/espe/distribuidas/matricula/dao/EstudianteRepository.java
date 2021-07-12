@@ -22,10 +22,12 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     
     Estudiante findByTipoIdentificacionAndIdentificacion(String tipoIdentificacion, String identificacion);
     
-    List<Estudiante> findByApellidoStartingWithOredrByApellido(String apellido);
+    List<Estudiante> findByApellidoLike(String apellido);
     
-    List<Estudiante> findByTelefonoOrderByApellidoAndNombre(String telefono);
+    Estudiante findByCorreo(String correo);
     
-    List<Estudiante> findByGeneroOrderByApellidoAndNombre(String genero);
+    List<Estudiante> findByTelefonoOrderByApellido(String telefono);
+    
+    List<Estudiante> findByGeneroOrderByApellido(String genero);
     
 }

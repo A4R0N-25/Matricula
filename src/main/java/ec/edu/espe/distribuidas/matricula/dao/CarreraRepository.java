@@ -20,7 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CarreraRepository extends JpaRepository<Carrera, Integer>{
     
-    Carrera findByNombreLike(String nombre);
+    List<Carrera> findByNombreLikeOrderByNombre(String nombre);
     
-    List<Carrera> findByEstado(String estado);
+    List<Carrera> findByVigencia(String vigencia);
 }

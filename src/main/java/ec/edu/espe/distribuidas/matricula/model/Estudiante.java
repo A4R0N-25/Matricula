@@ -30,7 +30,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "estudiante", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"tipo_identificacion", "idetificaion"})})
+    @UniqueConstraint(columnNames = {"tipo_identificacion", "identificacion","correo"})})
 
 public class Estudiante implements Serializable {
 
@@ -42,8 +42,8 @@ public class Estudiante implements Serializable {
     @Column(name = "tipo_identificacion", nullable = false, length = 3)
     private String tipoIdentificacion;
  
-    @Column(name = "idetificaion", nullable = false, length = 15)
-    private String idetificaion;
+    @Column(name = "identificacion", nullable = false, length = 15)
+    private String identificacion;
     
     @Column(name = "cod_carrera", nullable = false)
     private Integer codigoCarrera;
@@ -99,12 +99,12 @@ public class Estudiante implements Serializable {
         this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public String getIdetificaion() {
-        return idetificaion;
+    public String getIdentificacion() {
+        return identificacion;
     }
 
-    public void setIdetificaion(String idetificaion) {
-        this.idetificaion = idetificaion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
     public Integer getCodigoCarrera() {
