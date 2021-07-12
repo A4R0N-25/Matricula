@@ -11,6 +11,8 @@
 package ec.edu.espe.distribuidas.matricula.dao;
 
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -18,5 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bran-
  */
 public interface MatriculaRepository extends JpaRepository<Matricula, Integer>{
+    
+    List<Matricula> findByFechaOrderByFechaDesc(Date fecha);
     
 }

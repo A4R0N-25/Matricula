@@ -11,6 +11,8 @@
 package ec.edu.espe.distribuidas.matricula.dao;
 
 import ec.edu.espe.distribuidas.matricula.model.Horario;
+import java.util.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -18,5 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bran-
  */
 public interface HorarioRepository extends JpaRepository<Horario, Integer>{
+    
+    List<Horario> findByDiaAndHoraInicioAndHoraFindOrderByDia(String dia, Date horaInicio, Date horaFin);
     
 }

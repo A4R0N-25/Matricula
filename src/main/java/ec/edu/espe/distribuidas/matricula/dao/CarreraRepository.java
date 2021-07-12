@@ -11,6 +11,7 @@
 package ec.edu.espe.distribuidas.matricula.dao;
 
 import ec.edu.espe.distribuidas.matricula.model.Carrera;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -18,5 +19,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bran-
  */
 public interface CarreraRepository extends JpaRepository<Carrera, Integer>{
-    //List<Carrera> findByDepartamento (Carrera ) 
+    
+    Carrera findByNombreLike(String nombre);
+    
+    List<Carrera> findByEstado(String estado);
 }

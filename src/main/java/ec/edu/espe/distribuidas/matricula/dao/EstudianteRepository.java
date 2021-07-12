@@ -11,6 +11,7 @@
 package ec.edu.espe.distribuidas.matricula.dao;
 
 import ec.edu.espe.distribuidas.matricula.model.Estudiante;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -18,5 +19,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bran-
  */
 public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>{
+    
+    Estudiante findByTipoIdentificacionAndIdentificacion(String tipoIdentificacion, String identificacion);
+    
+    List<Estudiante> findByApellidoStartingWithOredrByApellido(String apellido);
+    
+    List<Estudiante> findByTelefonoOrderByApellidoAndNombre(String telefono);
+    
+    List<Estudiante> findByGeneroOrderByApellidoAndNombre(String genero);
     
 }
