@@ -10,7 +10,9 @@
  */
 package ec.edu.espe.distribuidas.matricula.dao;
 
+import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
+import ec.edu.espe.distribuidas.matricula.model.Periodo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -23,5 +25,7 @@ public interface CursoRepository extends JpaRepository<Curso, Integer>{
     Curso findByNrc(Integer nrc);
     
     List<Curso> findByCupoGreaterThan(Integer cupo);
+    
+    List<Curso> findByAsignaturaAndPeriodoOrderByNrc(Asignatura asignatura, Periodo periodo);
     
 }

@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -46,10 +47,12 @@ public class Prerequisito implements Serializable {
     
     @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Asignatura asignatura;
     
     @JoinColumn(name = "cod_asignatura_pre", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Asignatura prerequisito;
 
     public Prerequisito() {

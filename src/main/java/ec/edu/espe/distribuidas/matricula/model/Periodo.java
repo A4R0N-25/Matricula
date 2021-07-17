@@ -55,8 +55,8 @@ public class Periodo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fin;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
-    private List<AsignaturaPeriodo> asignaturaPeriodo;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
+    private List<AsignaturaPeriodo> asignaturaPeriodo;*/
 
     public Periodo() {
     }
@@ -105,13 +105,13 @@ public class Periodo implements Serializable {
         this.fin = fin;
     }
 
-    public List<AsignaturaPeriodo> getAsignaturaPeriodo() {
+    /*public List<AsignaturaPeriodo> getAsignaturaPeriodo() {
         return asignaturaPeriodo;
     }
 
     public void setAsignaturaPeriodo(List<AsignaturaPeriodo> asignaturaPeriodo) {
         this.asignaturaPeriodo = asignaturaPeriodo;
-    }
+    }*/
 
     @Override
     public int hashCode() {

@@ -12,6 +12,7 @@ package ec.edu.espe.distribuidas.matricula.dao;
 
 import ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodo;
 import ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodoPK;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,5 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author bran-
  */
 public interface AsignaturaPeriodoRepository extends JpaRepository<AsignaturaPeriodo, AsignaturaPeriodoPK>{
+    
+    List<AsignaturaPeriodo> findByPkCodigoPeriodo(Integer codigoPeriodo);
     
 }

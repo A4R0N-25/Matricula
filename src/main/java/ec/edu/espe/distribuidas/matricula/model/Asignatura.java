@@ -47,9 +47,9 @@ public class Asignatura implements Serializable {
     @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, insertable = false, updatable = false)
     @ManyToOne
     private Departamento departamento;
-    /*
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private List<Prerequisito> prerequisitos;*/
+    private List<Prerequisito> prerequisitos;
 
     public Asignatura() {
     }
@@ -60,6 +60,14 @@ public class Asignatura implements Serializable {
 
     public Integer getCodigo() {
         return codigo;
+    }
+
+    public List<Prerequisito> getPrerequisitos() {
+        return prerequisitos;
+    }
+
+    public void setPrerequisitos(List<Prerequisito> prerequisitos) {
+        this.prerequisitos = prerequisitos;
     }
 
     public void setCodigo(Integer codigo) {

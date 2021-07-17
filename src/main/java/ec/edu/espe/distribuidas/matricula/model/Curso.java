@@ -24,6 +24,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Representa a la tabla CURSO
@@ -32,7 +35,9 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "curso", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"nrc"})})
-
+@Data
+@NoArgsConstructor
+@ToString
 public class Curso implements Serializable {
 
     @Id
@@ -49,6 +54,9 @@ public class Curso implements Serializable {
     @Column(name = "cupo", nullable = false)
     private short cupo;
     
+    @Column(name = "disponible", nullable = false)
+    private short disponible;
+    
    /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<DetalleMatricula> detalleMatriculas;*/
     
@@ -59,100 +67,12 @@ public class Curso implements Serializable {
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     
-
-    public Curso() {
-    }
+    @JoinColumn(name = "cod_periodo", referencedColumnName = "cod_periodo", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Periodo periodo;
 
     public Curso(Integer codigo) {
         this.codigo = codigo;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigoAsignatura() {
-        return codigoAsignatura;
-    }
-
-    public void setCodigoAsignatura(Integer codigoAsignatura) {
-        this.codigoAsignatura = codigoAsignatura;
-    }    
-
-    public short getNrc() {
-        return nrc;
-    }
-
-    public void setNrc(short nrc) {
-        this.nrc = nrc;
-    }
-
-    public short getCupo() {
-        return cupo;
-    }
-
-    public void setCupo(short cupo) {
-        this.cupo = cupo;
-    }
-
-    /*public List<DetalleMatricula> getDetalleMatriculas() {
-        return detalleMatriculas;
-    }
-
-    public void setDetalleMatriculas(List<DetalleMatricula> detalleMatriculas) {
-        this.detalleMatriculas = detalleMatriculas;
-    }*/
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
-    }
-
-    public Asignatura getAsignatura() {
-        return asignatura;
-    }
-
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
-    }
-
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Curso other = (Curso) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Curso[ codigo=" + codigo + " ]";
     }
     
 }
