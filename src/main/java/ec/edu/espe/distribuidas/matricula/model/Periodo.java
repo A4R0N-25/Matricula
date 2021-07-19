@@ -39,10 +39,7 @@ public class Periodo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Column(name = "cod_periodo", nullable = false)
-    private Integer codigo;    
-
-    @Column(name = "modalidad", nullable = false, length = 3)
-    private String modalidad;    
+    private Integer codigo;      
   
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;    
@@ -71,14 +68,6 @@ public class Periodo implements Serializable {
 
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
-    }
-
-    public String getModalidad() {
-        return modalidad;
-    }
-
-    public void setModalidad(String modalidad) {
-        this.modalidad = modalidad;
     }
 
     public String getNombre() {

@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -17,9 +18,10 @@ import lombok.Data;
  * @author bran-
  */
 @Data
-public class AsignaturaRQ {
+@Builder
+public class PeriodoRS {
     
-    private Integer codigoDepartamento;
-    private Integer codigoPeriodo;
+    private Integer codigo;
+    private String nombre;
     
 }

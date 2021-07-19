@@ -10,10 +10,13 @@
  */
 package ec.edu.espe.distribuidas.matricula.controller;
 
+import ec.edu.espe.distribuidas.matricula.dto.AsignaturaRS;
 import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.service.AsignaturaService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/asignatura/")
+@CrossOrigin
 public class AsignaturaController {
     
     private final AsignaturaService asignaturaService;
@@ -36,9 +40,21 @@ public class AsignaturaController {
     @GetMapping(value = "{codigoDepartamento}/{codigoPeriodo}")
     public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, @PathVariable Integer codigoPeriodo){
         List<Asignatura> asignaturas = this.asignaturaService.obtenerAsignaturas(codigoDepartamento, codigoPeriodo);
-        return ResponseEntity.ok(asignaturas);
+        List<AsignaturaRS> asignaturasRS = new ArrayList<>();
+        for (Asignatura asig : asignaturas){
+            asignaturasRS.add(this.asignaturaRS(asig));
+        }
+        return ResponseEntity.ok(asignaturasRS);
     }
     
+    
+    private AsignaturaRS asignaturaRS(Asignatura asignatura){
+        AsignaturaRS asig = AsignaturaRS.builder()
+                .codigo(asignatura.getCodigo())
+                .nombre(asignatura.getNombre())
+                .build();
+        return asig;
+    }
     
     
 }

@@ -12,7 +12,6 @@ package ec.edu.espe.distribuidas.matricula.service;
 
 import ec.edu.espe.distribuidas.matricula.dao.AsignaturaPeriodoRepository;
 import ec.edu.espe.distribuidas.matricula.dao.DepartamentoRepository;
-import ec.edu.espe.distribuidas.matricula.dto.AsignaturaRQ;
 import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodo;
 import ec.edu.espe.distribuidas.matricula.model.Departamento;

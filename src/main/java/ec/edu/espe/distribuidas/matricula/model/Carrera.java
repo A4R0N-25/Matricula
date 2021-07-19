@@ -23,6 +23,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Representa a la tabla CARRERA
@@ -30,7 +33,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "carrera")
-
+@Data
+@NoArgsConstructor
+@ToString
 public class Carrera implements Serializable {
 
     @Id
@@ -47,87 +52,15 @@ public class Carrera implements Serializable {
     @Column(name = "niveles", nullable = false)
     private short niveles;
     
+    @Column(name = "modalidad", nullable = false, length = 3)
+    private String modalidad;  
+    
     @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, insertable = false, updatable = false)
     @ManyToOne
     private Departamento departamento;
-
-    public Carrera() {
-    }
 
     public Carrera(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getVigencia() {
-        return vigencia;
-    }
-
-    public void setVigencia(String vigencia) {
-        this.vigencia = vigencia;
-    }
-
-    public short getNiveles() {
-        return niveles;
-    }
-
-    public void setNiveles(short niveles) {
-        this.niveles = niveles;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-    
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Carrera other = (Carrera) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Carrera[ codigo=" + codigo + " ]";
-    }
-    
 }
