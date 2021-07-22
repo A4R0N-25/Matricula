@@ -15,7 +15,10 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
 /**
  * Representa a la tabla CARRERA_CURSO
@@ -23,11 +26,19 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "carrera_curso")
-
+@Data
 public class CarreraCurso implements Serializable {
 
     @EmbeddedId
     private CarreraCursoPK pk;
+    
+    @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Curso curso;
+    
+    @JoinColumn(name = "cod_carrera", referencedColumnName = "cod_carrera", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Carrera carrera;
     
     @Column(name = "estado", nullable = false, length = 3)
     private String estado;
@@ -35,63 +46,5 @@ public class CarreraCurso implements Serializable {
     public CarreraCurso() {
     }
 
-    public CarreraCurso(CarreraCursoPK pk) {
-        this.pk = pk;
-    }
-
-    public CarreraCurso(CarreraCursoPK pk, String estado) {
-        this.pk = pk;
-        this.estado = estado;
-    }
-
-    public CarreraCurso(Integer codigoCarrera, Integer codigoCurso) {
-        this.pk = new CarreraCursoPK(codigoCarrera, codigoCurso);
-    }
-
-    public CarreraCursoPK getPk() {
-        return pk;
-    }
-
-    public void setPk(CarreraCursoPK pk) {
-        this.pk = pk;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }   
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (pk != null ? pk.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CarreraCurso other = (CarreraCurso) obj;
-        if (!Objects.equals(this.pk, other.pk)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "CarreraCurso[ pk=" + pk + " ]";
-    }
     
 }

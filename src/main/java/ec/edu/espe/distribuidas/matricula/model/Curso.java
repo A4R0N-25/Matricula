@@ -61,6 +61,9 @@ public class Curso implements Serializable {
     private List<DetalleMatricula> detalleMatriculas;*/
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private List<CarreraCurso> carreraCursos;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<Horario> horarios;
     
     @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
