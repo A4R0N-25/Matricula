@@ -35,7 +35,6 @@ import lombok.ToString;
 @Table(name = "carrera")
 @Data
 @NoArgsConstructor
-@ToString
 public class Carrera implements Serializable {
 
     @Id
@@ -59,8 +58,5 @@ public class Carrera implements Serializable {
     @ManyToOne
     private Departamento departamento;
 
-    public Carrera(Integer codigo) {
-        this.codigo = codigo;
-    }
 
 }

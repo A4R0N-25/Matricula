@@ -16,6 +16,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,8 +46,8 @@ public class Curso implements Serializable {
     @Column(name = "cod_curso", nullable = false)
     private Integer codigo;    
  
-    @Column(name = "cod_asignatura", nullable = false)
-    private Integer codigoAsignatura;
+    /*@Column(name = "cod_asignatura", nullable = false)
+    private Integer codigoAsignatura;*/
     
     @Column(name = "nrc", nullable = false)
     private short nrc;
@@ -66,16 +67,13 @@ public class Curso implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<Horario> horarios;
     
-    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "cod_asignatura", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Asignatura asignatura;
     
-    @JoinColumn(name = "cod_periodo", referencedColumnName = "cod_periodo", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "cod_periodo", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Periodo periodo;
 
-    public Curso(Integer codigo) {
-        this.codigo = codigo;
-    }
     
 }

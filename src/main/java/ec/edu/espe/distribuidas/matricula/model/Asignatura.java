@@ -23,6 +23,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Data;
 
 /**
  * Representa a la tabla ASIGNATURA
@@ -30,7 +31,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "asignatura")
-
+@Data
 public class Asignatura implements Serializable {
 
     @Id
@@ -49,92 +50,12 @@ public class Asignatura implements Serializable {
     private Departamento departamento;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    private List<Curso> cursos;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
     private List<Prerequisito> prerequisitos;
 
     public Asignatura() {
-    }
-
-    public Asignatura(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public List<Prerequisito> getPrerequisitos() {
-        return prerequisitos;
-    }
-
-    public void setPrerequisitos(List<Prerequisito> prerequisitos) {
-        this.prerequisitos = prerequisitos;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public short getCreditos() {
-        return creditos;
-    }
-
-    public void setCreditos(short creditos) {
-        this.creditos = creditos;
-    }
-
-    public Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-    
-    
-    /*public List<Prerequisito> getPrerequisitos() {
-        return prerequisitos;
-    }
-
-    public void setPrerequisitos(List<Prerequisito> prerequisitos) {
-        this.prerequisitos = prerequisitos;
-    }*/
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Asignatura other = (Asignatura) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Asignatura[ codigo=" + codigo + " ]";
     }
     
 }
