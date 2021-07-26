@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -34,6 +35,7 @@ public class CarreraCurso implements Serializable {
     
     @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Curso curso;
     
     @JoinColumn(name = "cod_carrera", referencedColumnName = "cod_carrera", nullable = false, insertable = false, updatable = false)

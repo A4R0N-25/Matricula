@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +50,9 @@ public class Asignatura implements Serializable {
     @ManyToOne
     private Departamento departamento;
     
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
+    @JsonManagedReference
     private List<Curso> cursos;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")

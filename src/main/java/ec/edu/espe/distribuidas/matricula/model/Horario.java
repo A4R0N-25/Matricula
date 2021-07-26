@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -55,6 +56,7 @@ public class Horario implements Serializable {
     
     @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Curso curso;
 
     public Horario() {

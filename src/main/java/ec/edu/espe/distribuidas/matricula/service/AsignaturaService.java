@@ -39,12 +39,12 @@ public class AsignaturaService {
     
     public List<Asignatura> obtenerAsignaturas(Integer codigoDepartamento, Integer codigoPeriodo){
         List<AsignaturaPeriodo> asignaturaPeriodo = this.asignaturaPeriodoRepository.findByPkCodigoPeriodo(codigoPeriodo);
-        log.info("Por periodo:{}",asignaturaPeriodo);
+        //log.info("Por periodo:{}",asignaturaPeriodo);
         Optional<Departamento> departamento = this.departamentoRepository.findById(codigoDepartamento);
         List<Asignatura> asignaturas = new ArrayList<>();
         for(AsignaturaPeriodo asig : asignaturaPeriodo){
-            log.info("Asignatura: {}",asig.getAsignatura());
-            log.info("Departamento:{}", departamento.get());
+            //log.info("Asignatura: {}",asig.getAsignatura());
+            //log.info("Departamento:{}", departamento.get());
             if(asig.getAsignatura().getDepartamento().equals(departamento.get())){
                 asignaturas.add(asig.getAsignatura());
             }

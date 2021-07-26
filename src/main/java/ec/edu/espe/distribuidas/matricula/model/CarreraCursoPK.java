@@ -33,4 +33,7 @@ public class CarreraCursoPK implements Serializable {
     public CarreraCursoPK() {
     }
     
+    
+    
+    
 }

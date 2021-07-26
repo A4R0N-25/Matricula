@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -62,13 +64,16 @@ public class Curso implements Serializable {
     private List<DetalleMatricula> detalleMatriculas;*/
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    @JsonManagedReference
     private List<CarreraCurso> carreraCursos;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    @JsonManagedReference
     private List<Horario> horarios;
     
     @JoinColumn(name = "cod_asignatura", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Asignatura asignatura;
     
     @JoinColumn(name = "cod_periodo", nullable = false)

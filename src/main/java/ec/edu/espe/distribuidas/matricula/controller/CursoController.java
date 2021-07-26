@@ -10,6 +10,7 @@
  */
 package ec.edu.espe.distribuidas.matricula.controller;
 
+import ec.edu.espe.distribuidas.matricula.dto.CursoRS;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
 import ec.edu.espe.distribuidas.matricula.service.CursoService;
 import java.util.List;
@@ -37,7 +38,7 @@ public class CursoController {
     
     @GetMapping(value = "{codigoAsignatura}/{codigoPeriodo}")
     public ResponseEntity obneterCursos(@PathVariable Integer codigoAsignatura, @PathVariable Integer codigoPeriodo){
-        List<Curso> cursos = this.cursoService.obtenerCursos(codigoAsignatura, codigoPeriodo);
+        List<CursoRS> cursos = this.cursoService.obtenerCursos(codigoAsignatura, codigoPeriodo);
         return ResponseEntity.ok(cursos);
     }
     

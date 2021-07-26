@@ -13,9 +13,12 @@ package ec.edu.espe.distribuidas.matricula.service;
 import ec.edu.espe.distribuidas.matricula.dao.AsignaturaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.CursoRepository;
 import ec.edu.espe.distribuidas.matricula.dao.PeriodoRepository;
+import ec.edu.espe.distribuidas.matricula.dto.CursoRS;
 import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
 import ec.edu.espe.distribuidas.matricula.model.Periodo;
+import ec.edu.espe.distribuidas.matricula.transoform.CursoTS;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -40,11 +43,15 @@ public class CursoService {
     }
 
     
-    public List<Curso> obtenerCursos(Integer codigoAsignatura, Integer codigoPeriodo){
+    public List<CursoRS> obtenerCursos(Integer codigoAsignatura, Integer codigoPeriodo){
         Optional<Asignatura> asignatura = this.asignaturaRepository.findById(codigoAsignatura);
         Optional<Periodo> periodo = this.periodoRepository.findById(codigoPeriodo);
+        List<CursoRS> cursosRS = new ArrayList<>();
         List<Curso> curso = this.cursoRepository.findByAsignaturaAndPeriodoOrderByNrc(asignatura.get(), periodo.get());
-        return curso;
+        for(Curso c : curso){
+            cursosRS.add(CursoTS.cursoRS(c));
+        }
+        return cursosRS;
     }
     
 }
