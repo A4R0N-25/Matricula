@@ -18,6 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
 /**
  * Representa a la tabla ASIGNATURA PERIODO
@@ -25,7 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "asignatura_periodo")
-
+@Data
 public class AsignaturaPeriodo implements Serializable {
 
     @EmbeddedId
@@ -43,75 +44,4 @@ public class AsignaturaPeriodo implements Serializable {
 
     public AsignaturaPeriodo() {
     }
-
-    public AsignaturaPeriodo(AsignaturaPeriodoPK pk) {
-        this.pk = pk;
-    }
-
-    public AsignaturaPeriodo(Integer codigoPeriodo, Integer codigoAsignatura) {
-        this.pk = new AsignaturaPeriodoPK(codigoPeriodo, codigoAsignatura);
-    }
-
-    public AsignaturaPeriodoPK getPk() {
-        return pk;
-    }
-
-    public void setPk(AsignaturaPeriodoPK pk) {
-        this.pk = pk;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Asignatura getAsignatura() {
-        return asignatura;
-    }
-
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
-    }
-
-    public Periodo getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(Periodo periodo) {
-        this.periodo = periodo;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (pk != null ? pk.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AsignaturaPeriodo other = (AsignaturaPeriodo) obj;
-        if (!Objects.equals(this.pk, other.pk)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "AsignaturaPeriodo[ pk=" + pk + " ]";
-    }
-    
 }

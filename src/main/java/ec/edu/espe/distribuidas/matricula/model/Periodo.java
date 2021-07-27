@@ -24,6 +24,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Representa a la tabla PERIODO.
@@ -31,7 +33,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "periodo")
-
+@Data
+@NoArgsConstructor
 public class Periodo implements Serializable {
 
     private static final long serialVersionUID = 1234567L;
@@ -39,10 +42,7 @@ public class Periodo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Column(name = "cod_periodo", nullable = false)
-    private Integer codigo;    
-
-    @Column(name = "modalidad", nullable = false, length = 3)
-    private String modalidad;    
+    private Integer codigo;      
   
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;    
@@ -55,92 +55,7 @@ public class Periodo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fin;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
-    private List<AsignaturaPeriodo> asignaturaPeriodo;
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "periodo")
+    private List<AsignaturaPeriodo> asignaturaPeriodo;*/
 
-    public Periodo() {
-    }
-
-    public Periodo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getModalidad() {
-        return modalidad;
-    }
-
-    public void setModalidad(String modalidad) {
-        this.modalidad = modalidad;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Date getInicio() {
-        return inicio;
-    }
-
-    public void setInicio(Date inicio) {
-        this.inicio = inicio;
-    }
-
-    public Date getFin() {
-        return fin;
-    }
-
-    public void setFin(Date fin) {
-        this.fin = fin;
-    }
-
-    public List<AsignaturaPeriodo> getAsignaturaPeriodo() {
-        return asignaturaPeriodo;
-    }
-
-    public void setAsignaturaPeriodo(List<AsignaturaPeriodo> asignaturaPeriodo) {
-        this.asignaturaPeriodo = asignaturaPeriodo;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Periodo other = (Periodo) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Periodo[ codigo=" + codigo + " ]";
-    }
-    
 }

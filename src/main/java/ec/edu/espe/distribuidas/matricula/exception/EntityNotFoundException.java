@@ -8,21 +8,16 @@
  * Contributors:
  *    bran- - initial API and implementation and/or initial documentation
  */
-package ec.edu.espe.distribuidas.matricula.dao;
-
-import ec.edu.espe.distribuidas.matricula.model.Asignatura;
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+package ec.edu.espe.distribuidas.matricula.exception;
 
 /**
  *
  * @author bran-
  */
-public interface AsignaturaRepository extends JpaRepository<Asignatura, Integer>{
-    
-    List<Asignatura> findByNombre(String nombre);
-    
-    List<Asignatura> findByCreditosGreaterThan(Integer creditos);
-    
+public class EntityNotFoundException extends RuntimeException{
+
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
     
 }

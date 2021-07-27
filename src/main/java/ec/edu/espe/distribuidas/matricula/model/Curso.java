@@ -10,12 +10,15 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +27,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Representa a la tabla CURSO
@@ -32,7 +38,9 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "curso", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"nrc"})})
-
+@Data
+@NoArgsConstructor
+@ToString
 public class Curso implements Serializable {
 
     @Id
@@ -40,8 +48,8 @@ public class Curso implements Serializable {
     @Column(name = "cod_curso", nullable = false)
     private Integer codigo;    
  
-    @Column(name = "cod_asignatura", nullable = false)
-    private Integer codigoAsignatura;
+    /*@Column(name = "cod_asignatura", nullable = false)
+    private Integer codigoAsignatura;*/
     
     @Column(name = "nrc", nullable = false)
     private short nrc;
@@ -49,110 +57,28 @@ public class Curso implements Serializable {
     @Column(name = "cupo", nullable = false)
     private short cupo;
     
+    @Column(name = "disponible", nullable = false)
+    private short disponible;
+    
    /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<DetalleMatricula> detalleMatriculas;*/
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    @JsonManagedReference
+    private List<CarreraCurso> carreraCursos;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    @JsonManagedReference
     private List<Horario> horarios;
     
-    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "cod_asignatura", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Asignatura asignatura;
     
+    @JoinColumn(name = "cod_periodo", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Periodo periodo;
 
-    public Curso() {
-    }
-
-    public Curso(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigoAsignatura() {
-        return codigoAsignatura;
-    }
-
-    public void setCodigoAsignatura(Integer codigoAsignatura) {
-        this.codigoAsignatura = codigoAsignatura;
-    }    
-
-    public short getNrc() {
-        return nrc;
-    }
-
-    public void setNrc(short nrc) {
-        this.nrc = nrc;
-    }
-
-    public short getCupo() {
-        return cupo;
-    }
-
-    public void setCupo(short cupo) {
-        this.cupo = cupo;
-    }
-
-    /*public List<DetalleMatricula> getDetalleMatriculas() {
-        return detalleMatriculas;
-    }
-
-    public void setDetalleMatriculas(List<DetalleMatricula> detalleMatriculas) {
-        this.detalleMatriculas = detalleMatriculas;
-    }*/
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
-    }
-
-    public Asignatura getAsignatura() {
-        return asignatura;
-    }
-
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
-    }
-
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Curso other = (Curso) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Curso[ codigo=" + codigo + " ]";
-    }
     
 }

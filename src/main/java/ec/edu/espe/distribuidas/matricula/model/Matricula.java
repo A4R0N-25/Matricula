@@ -10,13 +10,15 @@
  */
 package ec.edu.espe.distribuidas.matricula.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,12 +29,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Representa a la clave primaria de la tabla MATRICULA
  * @author Usuario
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "matricula", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"cod_estudiante", "cod_periodo"})})
 
@@ -43,11 +49,11 @@ public class Matricula implements Serializable {
     @Column(name = "cod_matricula", nullable = false)
     private Integer codigo;
  
-    @Column(name = "cod_estudiante", nullable = false)
+    /*@Column(name = "cod_estudiante", nullable = false)
     private Integer codigoEstudiante;
     
     @Column(name = "cod_periodo", nullable = false)
-    private Integer codigoPeriodo;
+    private Integer codigoPeriodo;*/
     
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -56,116 +62,18 @@ public class Matricula implements Serializable {
     @Column(name = "creditos_totales", nullable = false, precision = 8, scale = 2)
     private BigDecimal creditosTotales;
     
-    @OneToMany(mappedBy = "matricula")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
     private List<DetalleMatricula> detalle;
     
-    @JoinColumn(name = "cod_estudiante", referencedColumnName = "cod_estudiante", nullable = false, insertable = false, updatable = false)
-    @ManyToOne
+    @JoinColumn(name = "cod_estudiante", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    @JsonIgnore
     private Estudiante estudiante;
     
-    @JoinColumn(name = "cod_periodo", referencedColumnName = "cod_periodo", nullable = false, insertable = false, updatable = false)
-    @ManyToOne
+    @JoinColumn(name = "cod_periodo", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, optional = false)
+    @JsonIgnore
     private Periodo periodo;
 
-    public Matricula() {
-    }
-
-    public Matricula(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
-    public Integer getCodigoEstudiante() {
-        return codigoEstudiante;
-    }
-
-    public void setCodigoEstudiante(Integer codigoEstudiante) {
-        this.codigoEstudiante = codigoEstudiante;
-    }
-
-    public Integer getCodigoPeriodo() {
-        return codigoPeriodo;
-    }
-
-    public void setCodigoPeriodo(Integer codigoPeriodo) {
-        this.codigoPeriodo = codigoPeriodo;
-    }    
-    
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public BigDecimal getCreditosTotales() {
-        return creditosTotales;
-    }
-
-    public void setCreditosTotales(BigDecimal creditosTotales) {
-        this.creditosTotales = creditosTotales;
-    }
-
-    public List<DetalleMatricula> getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(List<DetalleMatricula> detalle) {
-        this.detalle = detalle;
-    }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    public Periodo getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(Periodo periodo) {
-        this.periodo = periodo;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigo != null ? codigo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Matricula other = (Matricula) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "Matricula[ codigoMatricula=" + codigo + " ]";
-    }
     
 }

@@ -8,21 +8,25 @@
  * Contributors:
  *    bran- - initial API and implementation and/or initial documentation
  */
-package ec.edu.espe.distribuidas.matricula.dao;
+package ec.edu.espe.distribuidas.matricula.dto;
 
-import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  *
  * @author bran-
  */
-public interface AsignaturaRepository extends JpaRepository<Asignatura, Integer>{
-    
-    List<Asignatura> findByNombre(String nombre);
-    
-    List<Asignatura> findByCreditosGreaterThan(Integer creditos);
-    
-    
+@Data
+@Builder
+public class CursoRS {
+
+    private short nrc;
+    private short cupo;
+    private short disponible;
+    private short creditos;
+    private List<String> carreras;
+    private List<HorarioRS> horarios;
+
 }

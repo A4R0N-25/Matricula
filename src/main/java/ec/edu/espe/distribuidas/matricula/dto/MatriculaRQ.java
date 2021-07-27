@@ -8,19 +8,22 @@
  * Contributors:
  *    bran- - initial API and implementation and/or initial documentation
  */
-package ec.edu.espe.distribuidas.matricula.dao;
+package ec.edu.espe.distribuidas.matricula.dto;
 
-import ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodo;
-import ec.edu.espe.distribuidas.matricula.model.AsignaturaPeriodoPK;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  *
  * @author bran-
  */
-public interface AsignaturaPeriodoRepository extends JpaRepository<AsignaturaPeriodo, AsignaturaPeriodoPK>{
+@Data
+@Builder
+public class MatriculaRQ {
     
-    List<AsignaturaPeriodo> findByPkCodigoPeriodo(Integer codigoPeriodo);
+    private Integer estudiante;
+    private Integer periodo;
+    private List<Integer> cursos;
     
 }

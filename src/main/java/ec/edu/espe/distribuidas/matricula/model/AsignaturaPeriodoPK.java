@@ -14,12 +14,14 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import lombok.Data;
 
 /**
  * Representa a la clave primaria de la tabla ASIGNATURA_PERIODO
  * @author Usuario
  */
 @Embeddable
+@Data
 public class AsignaturaPeriodoPK implements Serializable {
 
     @Column(name = "cod_periodo", nullable = false)
@@ -31,59 +33,4 @@ public class AsignaturaPeriodoPK implements Serializable {
     public AsignaturaPeriodoPK() {
     }
 
-    public AsignaturaPeriodoPK(Integer codigoPeriodo, Integer codigoAsignatura) {
-        this.codigoPeriodo = codigoPeriodo;
-        this.codigoAsignatura = codigoAsignatura;
-    }
-
-    public Integer getCodigoPeriodo() {
-        return codigoPeriodo;
-    }
-
-    public void setCodigoPeriodo(Integer codigoPeriodo) {
-        this.codigoPeriodo = codigoPeriodo;
-    }
-
-    public Integer getCodigoAsignatura() {
-        return codigoAsignatura;
-    }
-
-    public void setCodigoAsignatura(Integer codigoAsignatura) {
-        this.codigoAsignatura = codigoAsignatura;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (int) codigoPeriodo;
-        hash += (int) codigoAsignatura;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final AsignaturaPeriodoPK other = (AsignaturaPeriodoPK) obj;
-        if (!Objects.equals(this.codigoPeriodo, other.codigoPeriodo)) {
-            return false;
-        }
-        if (!Objects.equals(this.codigoAsignatura, other.codigoAsignatura)) {
-            return false;
-        }
-        return true;
-    }    
-
-    @Override
-    public String toString() {
-        return "AsignaturaPeriodoPK[ codigoPeriodo=" + codigoPeriodo + ", codigoAsignatura=" + codigoAsignatura + " ]";
-    }
-    
 }
