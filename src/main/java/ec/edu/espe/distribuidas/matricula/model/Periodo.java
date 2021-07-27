@@ -47,6 +47,9 @@ public class Periodo implements Serializable {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;    
     
+    @Column(name = "estado", nullable = false, length = 3)
+    private String estado; 
+    
     @Column(name = "inicio", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date inicio;    

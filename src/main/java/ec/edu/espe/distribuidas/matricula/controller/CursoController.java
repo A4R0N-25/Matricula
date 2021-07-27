@@ -42,4 +42,14 @@ public class CursoController {
         return ResponseEntity.ok(cursos);
     }
     
+    @GetMapping(value = "{nrc}")
+    public ResponseEntity buscarNRC(@PathVariable short nrc){
+        try {
+            CursoRS cursoRS = this.cursoService.buscarPorNrc(nrc);    
+            return ResponseEntity.ok(cursoRS);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
 }
