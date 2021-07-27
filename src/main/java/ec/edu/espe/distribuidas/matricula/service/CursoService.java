@@ -54,4 +54,10 @@ public class CursoService {
         return cursosRS;
     }
     
+    public CursoRS buscarPorNrc(short nrc){
+        Curso curso = this.cursoRepository.findByNrc(nrc);
+        CursoRS cursoRS = CursoTS.cursoRS(curso);
+        return cursoRS;
+    }
+    
 }

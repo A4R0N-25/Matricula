@@ -89,10 +89,7 @@ public class MatriculaService {
         Matricula matricula = new Matricula();
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
 
-        Optional<Estudiante> estudiante = this.estudianteRepository.findById(matriculaRQ.getEstudiante());
-        if (estudiante.isEmpty()) {
-            throw new EntityNotFoundException("No se encontro el estudiante con el ID" + matriculaRQ.getEstudiante());
-        }
+        Estudiante estudiante = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
 
         Optional<Periodo> periodo = this.periodoRepository.findById(matriculaRQ.getPeriodo());
         if (periodo.isEmpty()) {
@@ -107,6 +104,12 @@ public class MatriculaService {
                 continue;
             }
             Curso curso = cursoOpt.get();
+            log.info("curso periodo:{}",curso.getPeriodo());
+            log.info("periodo matricula:_{}",periodo.get());
+            if(!curso.getPeriodo().equals(periodo.get())){
+                errorCursos.add("El curso con el ID: " + crs + " no pertenece al mismo periodo");
+                continue;
+            }
             if (creditos + curso.getAsignatura().getCreditos() > 50) {
                 errorCursos.add("No dispone de los creditos necesarios para matricularse en el curso:" + curso.getNrc());
                 log.error("No dispone de los creditos necesarios para matricularse en el curso:" + curso.getNrc());
@@ -122,7 +125,7 @@ public class MatriculaService {
             boolean prerequisito = false;
             int nPre = 0;
 
-            List<DetalleMatricula> materiasEstudiante = this.detalleMatriculaRepository.findByEstudiante(matriculaRQ.getEstudiante());
+            List<DetalleMatricula> materiasEstudiante = this.detalleMatriculaRepository.findByEstudiante(estudiante.getCodigo());
 
             for (Prerequisito pre : curso.getAsignatura().getPrerequisitos()) {
                 for (DetalleMatricula detMatricula : materiasEstudiante) {
@@ -141,7 +144,7 @@ public class MatriculaService {
             }
 
             for (CarreraCurso carreraCurso : curso.getCarreraCursos()) {
-                if (carreraCurso.getCarrera().equals(estudiante.get().getCarrera())) {
+                if (carreraCurso.getCarrera().equals(estudiante.getCarrera())) {
                     carrera = true;
                     break;
                 }
@@ -186,7 +189,7 @@ public class MatriculaService {
             }
         }
 
-        matricula.setEstudiante(estudiante.get());
+        matricula.setEstudiante(estudiante);
 
         log.info("CreditosDes:{}", creditos);
         log.info("Errores:{}", errorCursos);
@@ -200,6 +203,8 @@ public class MatriculaService {
         matricula.setFecha(new Date());
         if (detalleMatriculas.size() > 0) {
             this.matriculaRepository.save(matricula);
+        }else{
+            errorCursos.add("No se logro matricular en ninguna materia");
         }
 
     }

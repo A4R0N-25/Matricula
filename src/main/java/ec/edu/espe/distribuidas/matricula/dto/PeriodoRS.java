@@ -23,5 +23,6 @@ public class PeriodoRS {
     
     private Integer codigo;
     private String nombre;
+    private String estado;
     
 }

@@ -11,6 +11,7 @@
 package ec.edu.espe.distribuidas.matricula.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -63,6 +64,7 @@ public class Matricula implements Serializable {
     private BigDecimal creditosTotales;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
+    @JsonManagedReference
     private List<DetalleMatricula> detalle;
     
     @JoinColumn(name = "cod_estudiante", nullable = false)

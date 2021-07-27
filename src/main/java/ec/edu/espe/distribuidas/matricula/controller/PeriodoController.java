@@ -51,6 +51,7 @@ public class PeriodoController {
         PeriodoRS rs = PeriodoRS.builder()
                 .codigo(periodo.getCodigo())
                 .nombre(periodo.getNombre())
+                .estado(periodo.getEstado())
                 .build();
         return rs;
     }

@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CursoRepository extends JpaRepository<Curso, Integer>{
     
-    Curso findByNrc(Integer nrc);
+    Curso findByNrc(short nrc);
     
     List<Curso> findByCupoGreaterThan(Integer cupo);
     

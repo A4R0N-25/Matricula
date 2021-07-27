@@ -28,8 +28,10 @@ public class CursoTS {
     
     public static CursoRS cursoRS(Curso curso){
         return CursoRS.builder()
+                .codigo(curso.getCodigo())
                 .nrc(curso.getNrc())
                 .cupo(curso.getCupo())
+                .asignatura(curso.getAsignatura().getNombre())
                 .disponible(curso.getDisponible())
                 .creditos(curso.getAsignatura().getCreditos())
                 .carreras(carrerasCusrso(curso.getCarreraCursos()))

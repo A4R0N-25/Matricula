@@ -21,9 +21,10 @@ import lombok.Data;
 @Data
 @Builder
 public class CursoRS {
-
+    private Integer codigo;
     private short nrc;
     private short cupo;
+    private String asignatura;
     private short disponible;
     private short creditos;
     private List<String> carreras;
