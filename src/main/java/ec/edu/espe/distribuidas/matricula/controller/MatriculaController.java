@@ -12,6 +12,7 @@ package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/matricula/")
 @CrossOrigin
+@Slf4j
 public class MatriculaController {
 
     private final MatriculaService matriculaService;
@@ -40,7 +42,7 @@ public class MatriculaController {
             this.matriculaService.matricularse(matriculaRQ);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.internalServerError().build();
         }
     }
 
