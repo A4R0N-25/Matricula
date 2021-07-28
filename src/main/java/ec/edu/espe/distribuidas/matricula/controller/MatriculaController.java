@@ -11,16 +11,21 @@
 package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
+import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
+import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -42,16 +47,30 @@ public class MatriculaController {
     @PostMapping
     public ResponseEntity matricularse(@RequestBody MatriculaRQ matriculaRQ) {
         try {
-            this.matriculaService.matricularse(matriculaRQ);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
+            return ResponseEntity.ok(this.matriculaService.matricularse(matriculaRQ));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch(MatriculaConflictException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getErrores());
+        } catch(Exception e){
             return ResponseEntity.internalServerError().build();
         }
     }
     
-    @GetMapping(value = "{correo}/{periodo}")
-    public ResponseEntity buscarMatricula(@PathVariable String correo, @PathVariable Integer periodo){
+    @GetMapping
+    public ResponseEntity buscarMatricula(@RequestParam String correo, @RequestParam Integer periodo){
         Matricula matricula = this.matriculaService.buscarMatricula(correo, periodo);
         return ResponseEntity.ok(matricula);
+    }
+    
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity borarrMatriculaDetalle(@PathVariable Integer id){
+        try {
+            this.matriculaService.borrarDetalleMatricula(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+        
     }
 }
