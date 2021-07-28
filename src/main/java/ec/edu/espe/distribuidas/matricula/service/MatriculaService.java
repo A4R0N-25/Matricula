@@ -86,7 +86,17 @@ public class MatriculaService {
 
     @Transactional
     public void matricularse(MatriculaRQ matriculaRQ) {
-        Matricula matricula = new Matricula();
+        Matricula matricula;
+        if(matriculaRQ.getMatricula() == null) {
+            matricula = new Matricula();
+        } else {
+            Optional<Matricula> matriculaOptional = matriculaRepository.findById(matriculaRQ.getMatricula());
+            if(matriculaOptional.isPresent()) {
+                matricula = matriculaOptional.get();
+            } else {
+                matricula = new Matricula();
+            }
+        }
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
 
         Estudiante estudiante = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
@@ -188,7 +198,7 @@ public class MatriculaService {
 
             }
         }
-
+        
         matricula.setEstudiante(estudiante);
 
         log.info("CreditosDes:{}", creditos);
