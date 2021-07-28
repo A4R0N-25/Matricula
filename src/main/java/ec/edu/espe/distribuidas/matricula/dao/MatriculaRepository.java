@@ -10,9 +10,12 @@
  */
 package ec.edu.espe.distribuidas.matricula.dao;
 
+import ec.edu.espe.distribuidas.matricula.model.Estudiante;
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
+import ec.edu.espe.distribuidas.matricula.model.Periodo;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -22,5 +25,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MatriculaRepository extends JpaRepository<Matricula, Integer>{
     
     List<Matricula> findByFechaOrderByFechaDesc(Date fecha);
+    
+    Optional<Matricula> findByEstudianteAndPeriodo(Estudiante estudiante, Periodo periodo);
     
 }
