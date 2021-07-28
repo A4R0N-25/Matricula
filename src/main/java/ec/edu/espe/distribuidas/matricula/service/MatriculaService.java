@@ -89,7 +89,11 @@ public class MatriculaService {
         Matricula matricula = new Matricula();
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
 
-        Estudiante estudiante = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
+        if (estudianteOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + matriculaRQ.getCorreo());
+        }
+        Estudiante estudiante = estudianteOpt.get();
 
         Optional<Periodo> periodo = this.periodoRepository.findById(matriculaRQ.getPeriodo());
         if (periodo.isEmpty()) {
@@ -207,5 +211,26 @@ public class MatriculaService {
             errorCursos.add("No se logro matricular en ninguna materia");
         }
 
+    }
+    
+    public Matricula buscarMatricula(String correo, Integer periodo){
+        
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(correo);
+        if (estudianteOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + correo);
+        }
+        Estudiante estudiante = estudianteOpt.get();
+
+        Optional<Periodo> per = this.periodoRepository.findById(periodo);
+        if (per.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el periodo con el ID" + periodo);
+        }
+        
+        Optional<Matricula> matriculaOpt = this.matriculaRepository.findByEstudianteAndPeriodo(estudiante, per.get());
+        if(matriculaOpt.isEmpty()){
+            throw new EntityNotFoundException("No se encontro la una matricula en el periodo: "+per.get().getNombre()+" del estudiante "+estudiante.getApellido()+" "+estudiante.getNombre());
+        }
+        
+        return matriculaOpt.get();
     }
 }

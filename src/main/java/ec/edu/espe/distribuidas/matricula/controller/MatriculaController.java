@@ -11,9 +11,12 @@
 package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
+import ec.edu.espe.distribuidas.matricula.model.Matricula;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +46,10 @@ public class MatriculaController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    
+    @GetMapping(value = "{correo}/{periodo}")
+    public ResponseEntity buscarMatricula(@PathVariable String correo, @PathVariable Integer periodo){
+        Matricula matricula = this.matriculaService.buscarMatricula(correo, periodo);
+        return ResponseEntity.ok(matricula);
+    }
 }
