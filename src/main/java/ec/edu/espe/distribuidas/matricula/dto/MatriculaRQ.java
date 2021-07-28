@@ -25,5 +25,6 @@ public class MatriculaRQ {
     private String correo;
     private Integer periodo;
     private List<Integer> cursos;
+    private Integer matricula;
     
 }
