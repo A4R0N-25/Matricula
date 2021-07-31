@@ -15,7 +15,9 @@ import ec.edu.espe.distribuidas.matricula.dao.DetalleMatriculaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.EstudianteRepository;
 import ec.edu.espe.distribuidas.matricula.dao.MatriculaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.PeriodoRepository;
+import ec.edu.espe.distribuidas.matricula.dto.MatriculaDetalleRS;
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
+import ec.edu.espe.distribuidas.matricula.dto.MatriculaRS;
 import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.CarreraCurso;
@@ -123,7 +125,7 @@ public class MatriculaService {
             }
             Curso curso = cursoOpt.get();
             
-            List<DetalleMatricula> cursosRepetidos = matricula.getDetalle().stream().filter(d -> d.getCurso().getCodigo()==curso.getCodigo()).collect(Collectors.toList());
+            List<DetalleMatricula> cursosRepetidos = matricula.getDetalle().stream().filter(d -> d.getCurso().getAsignatura().getNombre().equals(curso.getAsignatura().getNombre())).collect(Collectors.toList());
             
             if(!cursosRepetidos.isEmpty()){
                 errorCursos.add("ya esta matriculado en el curso con el NRC: " + curso.getNrc());

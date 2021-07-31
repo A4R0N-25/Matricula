@@ -11,10 +11,12 @@
 package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
+import ec.edu.espe.distribuidas.matricula.dto.MatriculaRS;
 import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
+import ec.edu.espe.distribuidas.matricula.transoform.MatriculaTS;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,27 +52,34 @@ public class MatriculaController {
             return ResponseEntity.ok(this.matriculaService.matricularse(matriculaRQ));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch(MatriculaConflictException e){
+        } catch (MatriculaConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getErrores());
-        } catch(Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
-    
+
     @GetMapping
-    public ResponseEntity buscarMatricula(@RequestParam String correo, @RequestParam Integer periodo){
-        Matricula matricula = this.matriculaService.buscarMatricula(correo, periodo);
-        return ResponseEntity.ok(matricula);
+    public ResponseEntity buscarMatricula(@RequestParam String correo, @RequestParam Integer periodo) {
+        try {
+            Matricula matricula = this.matriculaService.buscarMatricula(correo, periodo);
+            MatriculaRS matriculaRS = MatriculaTS.matriculaRS(matricula);
+            return ResponseEntity.ok(matriculaRS);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
-    
+
     @DeleteMapping(value = "{id}")
-    public ResponseEntity borarrMatriculaDetalle(@PathVariable Integer id){
+    public ResponseEntity borarrMatriculaDetalle(@PathVariable Integer id) {
         try {
             this.matriculaService.borrarDetalleMatricula(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
-        
+
     }
 }
