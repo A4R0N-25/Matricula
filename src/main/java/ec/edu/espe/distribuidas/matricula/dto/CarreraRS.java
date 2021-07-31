@@ -19,12 +19,9 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class MatriculaDetalleRS {
+public class CarreraRS {
     
     private Integer codigo;
-    private short nrc;
-    private String materia;
-    private short creditos;
-    private String estado;
+    private String nombre;
     
 }

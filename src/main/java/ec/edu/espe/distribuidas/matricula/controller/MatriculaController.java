@@ -17,6 +17,8 @@ import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
 import ec.edu.espe.distribuidas.matricula.transoform.MatriculaTS;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,8 +69,23 @@ public class MatriculaController {
             return ResponseEntity.ok(matriculaRS);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping(value = "{correo}")
+    public ResponseEntity buscarMatriculasPorEstudiante(@PathVariable String correo) {
+        try {
+            List<Matricula> matriculas = this.matriculaService.obtenerMatriculasPorEstudiante(correo);
+            List<MatriculaRS> matriculasRS = new ArrayList<>();
+            for (Matricula matricula : matriculas) {
+                MatriculaRS matriculaRS = MatriculaTS.matriculaRS(matricula);
+                matriculasRS.add(matriculaRS);
+            }
+            return ResponseEntity.ok(matriculasRS);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
