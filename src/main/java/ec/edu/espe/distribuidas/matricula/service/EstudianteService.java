@@ -60,4 +60,14 @@ public class EstudianteService {
             .direccion(estudianteRs.getDireccion()).build();
         return this.estudianteRepository.save(estudiante2);
     }
+  
+  public Estudiante obtenerEstudanterPorCorreo(String correo){
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(correo);
+        
+        if(estudianteOpt.isEmpty()){
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo: " + correo);
+        }
+        
+        return estudianteOpt.get();
+    }
 }

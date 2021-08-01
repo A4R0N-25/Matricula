@@ -13,25 +13,18 @@ package ec.edu.espe.distribuidas.matricula.dto;
 import lombok.Builder;
 import lombok.Data;
 
-
 /**
  *
  * @author bran-
  */
-
 @Data
 @Builder
-public class EstudianteRS {
+public class MatriculaDetalleRS {
     
-    private String tipoIdentificacion;
-    private String identificacion;
-    private String nombre;
-    private String apellido;
-    private String usuario;
-    private String contraseña;
-    private String genero;
-    private String telefono;
-    private String direccion;
-    private Integer carrera;
+    private Integer codigo;
+    private short nrc;
+    private String materia;
+    private short creditos;
+    private String estado;
     
 }

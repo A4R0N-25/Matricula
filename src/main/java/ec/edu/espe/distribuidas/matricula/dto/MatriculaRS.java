@@ -10,28 +10,22 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
-import lombok.Builder;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 import lombok.Data;
-
 
 /**
  *
  * @author bran-
  */
-
 @Data
-@Builder
-public class EstudianteRS {
+public class MatriculaRS {
     
-    private String tipoIdentificacion;
-    private String identificacion;
-    private String nombre;
-    private String apellido;
-    private String usuario;
-    private String contraseña;
-    private String genero;
-    private String telefono;
-    private String direccion;
-    private Integer carrera;
+    private Integer codigo;
+    private Date fecha;
+    private String periodo;
+    private BigDecimal creditosTotales;
+    private List<MatriculaDetalleRS> detalle;
     
 }

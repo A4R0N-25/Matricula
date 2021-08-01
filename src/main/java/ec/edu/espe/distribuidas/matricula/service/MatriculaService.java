@@ -15,8 +15,11 @@ import ec.edu.espe.distribuidas.matricula.dao.DetalleMatriculaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.EstudianteRepository;
 import ec.edu.espe.distribuidas.matricula.dao.MatriculaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.PeriodoRepository;
+import ec.edu.espe.distribuidas.matricula.dto.MatriculaDetalleRS;
 import ec.edu.espe.distribuidas.matricula.dto.MatriculaRQ;
+import ec.edu.espe.distribuidas.matricula.dto.MatriculaRS;
 import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
+import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.CarreraCurso;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
 import ec.edu.espe.distribuidas.matricula.model.DetalleMatricula;
@@ -85,16 +88,25 @@ public class MatriculaService {
     }
 
     @Transactional
-    public void matricularse(MatriculaRQ matriculaRQ) {
-        Matricula matricula = new Matricula();
+    public List<String> matricularse(MatriculaRQ matriculaRQ) {
+        Matricula matricula;
+        if (matriculaRQ.getMatricula() == null) {
+            matricula = new Matricula();
+        } else {
+            Optional<Matricula> matriculaOptional = matriculaRepository.findById(matriculaRQ.getMatricula());
+            if (matriculaOptional.isPresent()) {
+                matricula = matriculaOptional.get();
+            } else {
+                matricula = new Matricula();
+            }
+        }
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
 
-        Optional<Estudiante> estudianteOptional = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
-        if(estudianteOptional.isEmpty()) {
-            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + matriculaRQ.getCorreo());
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
+        if (estudianteOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo: " + matriculaRQ.getCorreo());
         }
-
-        Estudiante estudiante = estudianteOptional.get();
+        Estudiante estudiante = estudianteOpt.get();
 
         Optional<Periodo> periodo = this.periodoRepository.findById(matriculaRQ.getPeriodo());
         if (periodo.isEmpty()) {
@@ -102,17 +114,27 @@ public class MatriculaService {
         }
         Integer creditos = 0;
         List<String> errorCursos = new ArrayList<>();
+
         for (Integer crs : matriculaRQ.getCursos()) {
             Optional<Curso> cursoOpt = this.cursoRepository.findById(crs);
+
             if (cursoOpt.isEmpty()) {
                 errorCursos.add("El curso con el ID: " + crs + " no existe");
                 continue;
             }
             Curso curso = cursoOpt.get();
-            log.info("curso periodo:{}",curso.getPeriodo());
-            log.info("periodo matricula:_{}",periodo.get());
-            if(!curso.getPeriodo().equals(periodo.get())){
-                errorCursos.add("El curso con el ID: " + crs + " no pertenece al mismo periodo");
+
+            List<DetalleMatricula> cursosRepetidos = matricula.getDetalle().stream().filter(d -> d.getCurso().getAsignatura().getNombre().equals(curso.getAsignatura().getNombre())).collect(Collectors.toList());
+
+            if (!cursosRepetidos.isEmpty()) {
+                errorCursos.add("ya esta matriculado en el curso con el NRC: " + curso.getNrc());
+                continue;
+            }
+
+            log.info("curso periodo:{}", curso.getPeriodo());
+            log.info("periodo matricula:_{}", periodo.get());
+            if (!curso.getPeriodo().equals(periodo.get())) {
+                errorCursos.add("El curso con el NRC: " + curso.getNrc() + " no pertenece al mismo periodo");
                 continue;
             }
             if (creditos + curso.getAsignatura().getCreditos() > 50) {
@@ -145,18 +167,19 @@ public class MatriculaService {
                 prerequisito = true;
             } else {
                 log.error("No cumplio con los prerequisitos");
-                errorCursos.add("No cumple con los prerequisitos para el curso:"+curso.getNrc());
+                errorCursos.add("No cumple con los prerequisitos para el curso:" + curso.getNrc());
             }
 
             for (CarreraCurso carreraCurso : curso.getCarreraCursos()) {
+                log.info("Carrera verificacion:{}", carreraCurso.getCarrera().getNombre());
                 if (carreraCurso.getCarrera().equals(estudiante.getCarrera())) {
                     carrera = true;
                     break;
                 }
             }
-            if (!carrera) {
+            if (!carrera && !curso.getCarreraCursos().isEmpty()) {
                 log.error("Carrera no disponible");
-                errorCursos.add("Su carrera no esta contemplada en el curso:"+curso.getNrc());
+                errorCursos.add("Su carrera no esta contemplada en el curso:" + curso.getNrc());
             }
 
             boolean ver = false;
@@ -208,9 +231,46 @@ public class MatriculaService {
         matricula.setFecha(new Date());
         if (detalleMatriculas.size() > 0) {
             this.matriculaRepository.save(matricula);
-        }else{
+            return errorCursos;
+        } else {
             errorCursos.add("No se logro matricular en ninguna materia");
+            throw new MatriculaConflictException("No se logro matricular en ninguna materia", errorCursos);
         }
 
+    }
+
+    public Matricula buscarMatricula(String correo, Integer periodo) {
+
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(correo);
+        if (estudianteOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + correo);
+        }
+        Estudiante estudiante = estudianteOpt.get();
+
+        Optional<Periodo> per = this.periodoRepository.findById(periodo);
+        if (per.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el periodo con el ID" + periodo);
+        }
+
+        Optional<Matricula> matriculaOpt = this.matriculaRepository.findByEstudianteAndPeriodo(estudiante, per.get());
+        if (matriculaOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro la una matricula en el periodo: " + per.get().getNombre() + " del estudiante " + estudiante.getApellido() + " " + estudiante.getNombre());
+        }
+
+        return matriculaOpt.get();
+    }
+
+    public void borrarDetalleMatricula(Integer id) {
+        this.detalleMatriculaRepository.deleteById(id);
+    }
+
+    public List<Matricula> obtenerMatriculasPorEstudiante(String correo) {
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(correo);
+        if (estudianteOpt.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo: " + correo);
+        }
+        Estudiante estudiante = estudianteOpt.get();
+
+        return estudiante.getMatricula();
     }
 }

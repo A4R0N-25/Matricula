@@ -8,23 +8,23 @@
  * Contributors:
  *    bran- - initial API and implementation and/or initial documentation
  */
-package ec.edu.espe.distribuidas.matricula.dto;
+package ec.edu.espe.distribuidas.matricula.exception;
 
 import java.util.List;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  *
  * @author bran-
  */
-@Data
-@Builder
-public class MatriculaRQ {
-    
-    private String correo;
-    private Integer periodo;
-    private List<Integer> cursos;
-    private Integer matricula;
-    
+@Getter
+public class MatriculaConflictException extends RuntimeException {
+
+    private List<String> errores;
+
+    public MatriculaConflictException(String message, List<String> errores) {
+        super(message);
+        this.errores = errores;
+    }
+
 }
