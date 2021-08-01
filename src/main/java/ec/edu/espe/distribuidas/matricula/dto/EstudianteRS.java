@@ -19,12 +19,15 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class MatriculaDetalleRS {
+public class EstudianteRS {
     
-    private Integer codigo;
-    private short nrc;
-    private String materia;
-    private short creditos;
-    private String estado;
+    private String tipo;
+    private String identificacion;
+    private String nombre;
+    private String apellido;
+    private String correo;
+    private String genero;
+    private String telefono;
+    private String direccion;
     
 }

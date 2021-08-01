@@ -36,6 +36,7 @@ public class MatriculaTS {
                     .nrc(detalleMatricula.getCurso().getNrc())
                     .materia(detalleMatricula.getCurso().getAsignatura().getNombre())
                     .creditos(detalleMatricula.getCurso().getAsignatura().getCreditos())
+                    .estado(detalleMatricula.getEstado())
                     .build();
             matriculaDetalles.add(matriculaDetalleRS);
         }
