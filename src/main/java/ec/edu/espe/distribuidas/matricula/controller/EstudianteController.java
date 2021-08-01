@@ -17,6 +17,7 @@ import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.model.Estudiante;
 import ec.edu.espe.distribuidas.matricula.service.EstudianteService;
 import ec.edu.espe.distribuidas.matricula.transoform.EstudianteTS;
+import javax.persistence.EntityExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class EstudianteController {
             Estudiante estudiante = this.estudianteService.obtenerEstudanterPorCorreo(correo);
             EstudianteRS estudianteRS = EstudianteTS.estudianteRS(estudiante);
             return ResponseEntity.ok(estudianteRS);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.info(e.getMessage());
             return ResponseEntity.notFound().build();
         }
@@ -59,12 +60,13 @@ public class EstudianteController {
     }
 
     @PostMapping
-    public ResponseEntity<Estudiante> crearEstudiante(@RequestBody EstudianteRQ estudianteRQ) {
+    public ResponseEntity crearEstudiante(@RequestBody EstudianteRQ estudianteRQ) {
         try {
-            return ResponseEntity.ok(this.estudianteService.agregarEstudiante(estudianteRQ));
-        } catch(EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (Exception e) {
+            this.estudianteService.agregarEstudiante(estudianteRQ);
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException | EntityExistsException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
@@ -74,11 +76,11 @@ public class EstudianteController {
     public ResponseEntity<Estudiante> editarEstudiante(@PathVariable String usuario, @RequestBody EstudianteEditarRS estudianteEditarRs) {
         try {
             return ResponseEntity.ok(this.estudianteService.actualizarEstudiante(usuario, estudianteEditarRs));
-        } catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }/*catch (Exception e) {
+        }catch (Exception e) {
             return ResponseEntity.internalServerError().build();
-        }*/
+        }
     }
 
 }

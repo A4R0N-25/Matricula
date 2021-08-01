@@ -11,9 +11,10 @@
 package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.CursoRS;
-import ec.edu.espe.distribuidas.matricula.model.Curso;
+import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.service.CursoService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,27 +30,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/curso/")
 @CrossOrigin
 public class CursoController {
-    
+
     private final CursoService cursoService;
 
     public CursoController(CursoService cursoService) {
         this.cursoService = cursoService;
     }
-    
+
     @GetMapping(value = "{codigoAsignatura}/{codigoPeriodo}")
-    public ResponseEntity obneterCursos(@PathVariable Integer codigoAsignatura, @PathVariable Integer codigoPeriodo){
-        List<CursoRS> cursos = this.cursoService.obtenerCursos(codigoAsignatura, codigoPeriodo);
-        return ResponseEntity.ok(cursos);
-    }
-    
-    @GetMapping(value = "{nrc}")
-    public ResponseEntity buscarNRC(@PathVariable short nrc){
+    public ResponseEntity obneterCursos(@PathVariable Integer codigoAsignatura, @PathVariable Integer codigoPeriodo) {
         try {
-            CursoRS cursoRS = this.cursoService.buscarPorNrc(nrc);    
-            return ResponseEntity.ok(cursoRS);
+            List<CursoRS> cursos = this.cursoService.obtenerCursos(codigoAsignatura, codigoPeriodo);
+            return ResponseEntity.ok(cursos);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.internalServerError().build();
         }
     }
-    
+
+    @GetMapping(value = "{nrc}")
+    public ResponseEntity buscarNRC(@PathVariable short nrc) {
+        try {
+            CursoRS cursoRS = this.cursoService.buscarPorNrc(nrc);
+            return ResponseEntity.ok(cursoRS);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

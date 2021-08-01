@@ -14,6 +14,7 @@ import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
 import ec.edu.espe.distribuidas.matricula.model.Periodo;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -22,7 +23,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CursoRepository extends JpaRepository<Curso, Integer>{
     
-    Curso findByNrc(short nrc);
+    Optional<Curso> findByNrc(short nrc);
     
     List<Curso> findByCupoGreaterThan(Integer cupo);
     

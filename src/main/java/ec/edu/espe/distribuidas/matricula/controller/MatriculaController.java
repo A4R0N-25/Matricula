@@ -56,10 +56,10 @@ public class MatriculaController {
             return ResponseEntity.notFound().build();
         } catch (MatriculaConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getErrores());
-        } /*catch (Exception e) {
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
-        }*/
+        }
     }
 
     @GetMapping
@@ -95,6 +95,8 @@ public class MatriculaController {
         try {
             this.matriculaService.borrarDetalleMatricula(id);
             return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

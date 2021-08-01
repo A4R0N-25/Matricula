@@ -11,10 +11,13 @@
 package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.dto.AsignaturaRS;
+import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.service.AsignaturaService;
+import ec.edu.espe.distribuidas.matricula.transoform.AsignaturaTS;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,31 +33,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/asignatura/")
 @CrossOrigin
 public class AsignaturaController {
-    
+
     private final AsignaturaService asignaturaService;
 
     public AsignaturaController(AsignaturaService asignaturaService) {
         this.asignaturaService = asignaturaService;
     }
-    
+
     @GetMapping(value = "{codigoDepartamento}/{codigoPeriodo}")
-    public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, @PathVariable Integer codigoPeriodo){
-        List<Asignatura> asignaturas = this.asignaturaService.obtenerAsignaturas(codigoDepartamento, codigoPeriodo);
-        List<AsignaturaRS> asignaturasRS = new ArrayList<>();
-        for (Asignatura asig : asignaturas){
-            asignaturasRS.add(this.asignaturaRS(asig));
+    public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, @PathVariable Integer codigoPeriodo) {
+        try {
+            List<Asignatura> asignaturas = this.asignaturaService.obtenerAsignaturas(codigoDepartamento, codigoPeriodo);
+            List<AsignaturaRS> asignaturasRS = new ArrayList<>();
+            for (Asignatura asig : asignaturas) {
+                asignaturasRS.add(AsignaturaTS.asignaturaRS(asig));
+            }
+            return ResponseEntity.ok(asignaturasRS);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok(asignaturasRS);
     }
-    
-    
-    private AsignaturaRS asignaturaRS(Asignatura asignatura){
-        AsignaturaRS asig = AsignaturaRS.builder()
-                .codigo(asignatura.getCodigo())
-                .nombre(asignatura.getNombre())
-                .build();
-        return asig;
-    }
-    
-    
+
 }

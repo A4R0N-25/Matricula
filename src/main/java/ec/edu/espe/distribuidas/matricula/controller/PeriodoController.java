@@ -13,6 +13,7 @@ package ec.edu.espe.distribuidas.matricula.controller;
 import ec.edu.espe.distribuidas.matricula.dto.PeriodoRS;
 import ec.edu.espe.distribuidas.matricula.model.Periodo;
 import ec.edu.espe.distribuidas.matricula.service.PeriodoService;
+import ec.edu.espe.distribuidas.matricula.transoform.PeriodoTS;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -29,30 +30,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/periodo/")
 @CrossOrigin
 public class PeriodoController {
-    
+
     private final PeriodoService periodoService;
 
     public PeriodoController(PeriodoService periodoService) {
         this.periodoService = periodoService;
     }
-    
+
     @GetMapping
-    public ResponseEntity obtenerPeriodos(){
-        List<Periodo> periodos = this.periodoService.obtenerTodosPeriodos();
-        List<PeriodoRS> periodosRS = new ArrayList<>();
-        periodos.forEach(pr -> {
-            periodosRS.add(this.periodoRS(pr));
-        });
-        return ResponseEntity.ok(periodosRS);
+    public ResponseEntity obtenerPeriodos() {
+        try {
+            List<Periodo> periodos = this.periodoService.obtenerTodosPeriodos();
+            List<PeriodoRS> periodosRS = new ArrayList<>();
+            periodos.forEach(pr -> {
+                periodosRS.add(PeriodoTS.periodoRS(pr));
+            });
+            return ResponseEntity.ok(periodosRS);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
-    
-    
-    private PeriodoRS periodoRS(Periodo periodo){
-        PeriodoRS rs = PeriodoRS.builder()
-                .codigo(periodo.getCodigo())
-                .nombre(periodo.getNombre())
-                .estado(periodo.getEstado())
-                .build();
-        return rs;
-    }
+
 }

@@ -28,9 +28,16 @@ public class EstudianteService {
         this.carreraRepository = carreraRepository;
     }
 
-    public Estudiante agregarEstudiante(EstudianteRQ estudianteRQ) {
+    public void agregarEstudiante(EstudianteRQ estudianteRQ) {
+        boolean ced = this.verificarCedula(estudianteRQ.getIdentificacion());
+        
+        if(!ced){
+            log.error("Cedula Invalida: {}",estudianteRQ.getIdentificacion());
+            throw new EntityNotFoundException("Cedula Invalida");
+        }
+        
         List<Estudiante> estudiantes = this.estudianteRepository
-                .findByCorreoOrIdentificacion(estudianteRQ.getCorreo()+ "@espe.edu.ec", estudianteRQ.getIdentificacion());
+                .findByCorreoOrIdentificacion(estudianteRQ.getCorreo() + "@espe.edu.ec", estudianteRQ.getIdentificacion());
         if (!estudiantes.isEmpty()) {
             throw new EntityExistsException("Ya existe un usuario con esta cedula o nombre de usuario");
         }
@@ -42,14 +49,14 @@ public class EstudianteService {
         estudiante.setTipoIdentificacion(estudianteRQ.getTipo());
         estudiante.setIdentificacion(estudianteRQ.getIdentificacion());
         estudiante.setContraseña(estudianteRQ.getContraseña());
-        estudiante.setCorreo(estudianteRQ.getCorreo()+"@espe.edu.ec");
+        estudiante.setCorreo(estudianteRQ.getCorreo() + "@espe.edu.ec");
         estudiante.setApellido(estudianteRQ.getApellido().toUpperCase());
         estudiante.setNombre(estudianteRQ.getNombre().toUpperCase());
         estudiante.setGenero(estudianteRQ.getGenero());
         estudiante.setTelefono(estudianteRQ.getTelefono());
         estudiante.setDireccion(estudianteRQ.getDireccion().toUpperCase());
         estudiante.setCarrera(carrera.get());
-        return this.estudianteRepository.save(estudiante);
+        this.estudianteRepository.save(estudiante);
     }
 
     public Estudiante actualizarEstudiante(String usuario, EstudianteEditarRS estudianteRs) {
@@ -75,5 +82,43 @@ public class EstudianteService {
         }
 
         return estudianteOpt.get();
+    }
+
+    private boolean verificarCedula(String document) {
+        byte sum = 0;
+        try {
+            if (document.trim().length() != 10) {
+                return false;
+            }
+            String[] data = document.split("");
+            byte verifier = Byte.parseByte(data[0] + data[1]);
+            if (verifier < 1 || verifier > 24) {
+                return false;
+            }
+            byte[] digits = new byte[data.length];
+            for (byte i = 0; i < digits.length; i++) {
+                digits[i] = Byte.parseByte(data[i]);
+            }
+            if (digits[2] > 6) {
+                return false;
+            }
+            for (byte i = 0; i < digits.length - 1; i++) {
+                if (i % 2 == 0) {
+                    verifier = (byte) (digits[i] * 2);
+                    if (verifier > 9) {
+                        verifier = (byte) (verifier - 9);
+                    }
+                } else {
+                    verifier = (byte) (digits[i] * 1);
+                }
+                sum = (byte) (sum + verifier);
+            }
+            if ((sum - (sum % 10) + 10 - sum) == digits[9]) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

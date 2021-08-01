@@ -30,22 +30,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/carrera")
 @CrossOrigin
 public class CarreraController {
-    
+
     public final CarreraService carreraService;
 
     public CarreraController(CarreraService carreraService) {
         this.carreraService = carreraService;
     }
-    
+
     @GetMapping
-    private ResponseEntity obtenerCarreras(){
-        List<Carrera> carreras = this.carreraService.obtenerTodasCarreras();
-        List<CarreraRS> carrerasRS = new ArrayList<>();
-        for(Carrera carrera : carreras){
-            CarreraRS carreraRS = CarreraTS.carreraTransform(carrera);
-            carrerasRS.add(carreraRS);
+    private ResponseEntity obtenerCarreras() {
+        try {
+            List<Carrera> carreras = this.carreraService.obtenerTodasCarreras();
+            List<CarreraRS> carrerasRS = new ArrayList<>();
+            for (Carrera carrera : carreras) {
+                CarreraRS carreraRS = CarreraTS.carreraTransform(carrera);
+                carrerasRS.add(carreraRS);
+            }
+            return ResponseEntity.ok(carrerasRS);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok(carrerasRS);
     }
-    
+
 }

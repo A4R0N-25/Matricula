@@ -27,18 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/departamento")
 @CrossOrigin
 public class DepartamentoController {
-    
+
     private final DepartamentoService departamentoService;
 
     public DepartamentoController(DepartamentoService departamentoService) {
         this.departamentoService = departamentoService;
     }
-    
+
     @GetMapping
-    public ResponseEntity obtenerDepartamento(){
-        List<Departamento> departamentos= this.departamentoService.obtenerDepartamentos();
-        return ResponseEntity.ok(departamentos);
+    public ResponseEntity obtenerDepartamento() {
+        try {
+            List<Departamento> departamentos = this.departamentoService.obtenerDepartamentos();
+            return ResponseEntity.ok(departamentos);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
-    
-    
+
 }

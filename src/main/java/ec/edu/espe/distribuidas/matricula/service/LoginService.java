@@ -12,25 +12,19 @@ public class LoginService {
 
     private final EstudianteRepository estudianteRepository;
 
-
     public LoginService(EstudianteRepository estudianteRepository) {
         this.estudianteRepository = estudianteRepository;
     }
 
-    public boolean authenticacion(LoginDto loginDto){
-        Optional<Estudiante> estudianteOpt= this.estudianteRepository.findByCorreo(loginDto.getCorreo());
+    public void authenticacion(LoginDto loginDto) throws Exception {
+        Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(loginDto.getCorreo());
         if (estudianteOpt.isEmpty()) {
-            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + loginDto.getCorreo());
+            throw new EntityNotFoundException("Usuario no encontrado");
         }
         Estudiante estudiante = estudianteOpt.get();
-        if (estudiante!=null){
-            if (estudiante.getContraseña().equals(loginDto.getPassword())){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
+
+        if (!estudiante.getContraseña().equals(loginDto.getPassword())) {
+            throw new Exception("Contraseña Invalida");
         }
     }
 }

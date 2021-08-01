@@ -14,6 +14,7 @@ import ec.edu.espe.distribuidas.matricula.dao.AsignaturaRepository;
 import ec.edu.espe.distribuidas.matricula.dao.CursoRepository;
 import ec.edu.espe.distribuidas.matricula.dao.PeriodoRepository;
 import ec.edu.espe.distribuidas.matricula.dto.CursoRS;
+import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.model.Asignatura;
 import ec.edu.espe.distribuidas.matricula.model.Curso;
 import ec.edu.espe.distribuidas.matricula.model.Periodo;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CursoService {
-    
+
     private final CursoRepository cursoRepository;
     private final AsignaturaRepository asignaturaRepository;
     private final PeriodoRepository periodoRepository;
@@ -42,22 +43,31 @@ public class CursoService {
         this.periodoRepository = periodoRepository;
     }
 
-    
-    public List<CursoRS> obtenerCursos(Integer codigoAsignatura, Integer codigoPeriodo){
+    public List<CursoRS> obtenerCursos(Integer codigoAsignatura, Integer codigoPeriodo) {
         Optional<Asignatura> asignatura = this.asignaturaRepository.findById(codigoAsignatura);
+
+        if (asignatura.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro la asignatura");
+        }
         Optional<Periodo> periodo = this.periodoRepository.findById(codigoPeriodo);
+        if (periodo.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el periodo");
+        }
         List<CursoRS> cursosRS = new ArrayList<>();
         List<Curso> curso = this.cursoRepository.findByAsignaturaAndPeriodoOrderByNrc(asignatura.get(), periodo.get());
-        for(Curso c : curso){
+        for (Curso c : curso) {
             cursosRS.add(CursoTS.cursoRS(c));
         }
         return cursosRS;
     }
-    
-    public CursoRS buscarPorNrc(short nrc){
-        Curso curso = this.cursoRepository.findByNrc(nrc);
-        CursoRS cursoRS = CursoTS.cursoRS(curso);
+
+    public CursoRS buscarPorNrc(short nrc) {
+        Optional<Curso> curso = this.cursoRepository.findByNrc(nrc);
+        if (curso.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el nrc: " + nrc);
+        }
+        CursoRS cursoRS = CursoTS.cursoRS(curso.get());
         return cursoRS;
     }
-    
+
 }
