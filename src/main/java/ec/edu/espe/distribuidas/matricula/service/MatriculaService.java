@@ -104,7 +104,7 @@ public class MatriculaService {
 
         Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
         if (estudianteOpt.isEmpty()) {
-            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + matriculaRQ.getCorreo());
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo: " + matriculaRQ.getCorreo());
         }
         Estudiante estudiante = estudianteOpt.get();
 
