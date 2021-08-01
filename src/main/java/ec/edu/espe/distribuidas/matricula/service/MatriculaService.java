@@ -124,11 +124,12 @@ public class MatriculaService {
             }
             Curso curso = cursoOpt.get();
 
-            List<DetalleMatricula> cursosRepetidos = matricula.getDetalle().stream().filter(d -> d.getCurso().getAsignatura().getNombre().equals(curso.getAsignatura().getNombre())).collect(Collectors.toList());
-
-            if (!cursosRepetidos.isEmpty()) {
-                errorCursos.add("ya esta matriculado en el curso con el NRC: " + curso.getNrc());
-                continue;
+            if (matricula.getCodigo() != null) {
+                List<DetalleMatricula> cursosRepetidos = matricula.getDetalle().stream().filter(d -> d.getCurso().getAsignatura().getNombre().equals(curso.getAsignatura().getNombre())).collect(Collectors.toList());
+                if (!cursosRepetidos.isEmpty()) {
+                    errorCursos.add("ya esta matriculado en el curso con el NRC: " + curso.getNrc());
+                    continue;
+                }
             }
 
             log.info("curso periodo:{}", curso.getPeriodo());
@@ -153,6 +154,8 @@ public class MatriculaService {
             int nPre = 0;
 
             List<DetalleMatricula> materiasEstudiante = this.detalleMatriculaRepository.findByEstudiante(estudiante.getCodigo());
+
+            log.info("Detalles OP:{}", materiasEstudiante);
 
             for (Prerequisito pre : curso.getAsignatura().getPrerequisitos()) {
                 for (DetalleMatricula detMatricula : materiasEstudiante) {

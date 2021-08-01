@@ -25,60 +25,60 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Representa a la tabla ESTUDIANTE
+ *
  * @author Usuario
  */
+@NoArgsConstructor
 @Entity
 @Data
-@Builder
+//@Builder
 @Table(name = "estudiante", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"tipo_identificacion", "identificacion","correo"})})
+    @UniqueConstraint(columnNames = {"tipo_identificacion", "identificacion", "correo"})})
 public class Estudiante implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_estudiante", nullable = false)
     private Integer codigo;
 
     @Column(name = "tipo_identificacion", nullable = false, length = 3)
     private String tipoIdentificacion;
- 
+
     @Column(name = "identificacion", nullable = false, length = 15)
     private String identificacion;
-    
+
     /*@Column(name = "cod_carrera", nullable = false)
     private Integer codigoCarrera;*/
-
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
     @Column(name = "apellido", nullable = false, length = 50)
     private String apellido;
-    
+
     @Column(name = "correo", nullable = false, length = 50)
     private String correo;
-    
+
     @Column(name = "contraseña", nullable = false, length = 260)
     private String contraseña;
 
     @Column(name = "genero", nullable = false, length = 3)
     private String genero;
-    
+
     @Column(name = "telefono", length = 15)
     private String telefono;
-    
+
     @Column(name = "direccion", length = 200)
     private String direccion;
-    
+
     @JoinColumn(name = "cod_carrera", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     private Carrera carrera;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiante")
     private List<Matricula> matricula;
 
