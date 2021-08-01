@@ -47,5 +47,23 @@ public class EstudianteController {
         }
         
     }
+  
+  @PostMapping
+    public ResponseEntity<Estudiante> crearEstudiante(@RequestBody EstudianteRS estudianteRs) {
+        try {
+            return ResponseEntity.ok(this.estudianteService.agregarEstudiante(estudianteRs));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{usuario}")
+    public ResponseEntity<Estudiante> editarEstudiante(@PathVariable String usuario, @RequestBody EstudianteEditarRS estudianteEditarRs) {
+        try {
+            return ResponseEntity.ok(this.estudianteService.actualizarEstudiante(usuario, estudianteEditarRs));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     
 }

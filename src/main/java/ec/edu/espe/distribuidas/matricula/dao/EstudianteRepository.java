@@ -24,6 +24,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     Estudiante findByTipoIdentificacionAndIdentificacion(String tipoIdentificacion, String identificacion);
     
     List<Estudiante> findByApellidoLike(String apellido);
+
+    List<Estudiante> findByCorreoOrIdentificacion(String correo, String identificacion);
     
     Optional<Estudiante> findByCorreo(String correo);
     

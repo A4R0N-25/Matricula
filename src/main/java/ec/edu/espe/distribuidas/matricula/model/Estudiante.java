@@ -12,7 +12,6 @@ package ec.edu.espe.distribuidas.matricula.model;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -34,7 +35,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Data
-@NoArgsConstructor
+@Builder
 @Table(name = "estudiante", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"tipo_identificacion", "identificacion","correo"})})
 public class Estudiante implements Serializable {
