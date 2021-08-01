@@ -89,7 +89,12 @@ public class MatriculaService {
         Matricula matricula = new Matricula();
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
 
-        Estudiante estudiante = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
+        Optional<Estudiante> estudianteOptional = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
+        if(estudianteOptional.isEmpty()) {
+            throw new EntityNotFoundException("No se encontro el estudiante con el correo" + matriculaRQ.getCorreo());
+        }
+
+        Estudiante estudiante = estudianteOptional.get();
 
         Optional<Periodo> periodo = this.periodoRepository.findById(matriculaRQ.getPeriodo());
         if (periodo.isEmpty()) {
