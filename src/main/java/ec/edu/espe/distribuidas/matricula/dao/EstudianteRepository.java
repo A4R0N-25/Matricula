@@ -19,18 +19,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>{
-    
+public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
+
     Estudiante findByTipoIdentificacionAndIdentificacion(String tipoIdentificacion, String identificacion);
-    
+
     List<Estudiante> findByApellidoLike(String apellido);
 
     List<Estudiante> findByCorreoOrIdentificacion(String correo, String identificacion);
-    
+
     Optional<Estudiante> findByCorreo(String correo);
-    
+
     List<Estudiante> findByTelefonoOrderByApellido(String telefono);
-    
+
     List<Estudiante> findByGeneroOrderByApellido(String genero);
-    
+
 }

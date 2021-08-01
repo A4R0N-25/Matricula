@@ -25,8 +25,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class CursoTS {
-    
-    public static CursoRS cursoRS(Curso curso){
+
+    public static CursoRS cursoRS(Curso curso) {
         return CursoRS.builder()
                 .codigo(curso.getCodigo())
                 .nrc(curso.getNrc())
@@ -38,33 +38,33 @@ public class CursoTS {
                 .horarios(horarios(curso.getHorarios()))
                 .build();
     }
-    
-    public static List<String> carrerasCusrso(List<CarreraCurso> carreraCurso){
+
+    public static List<String> carrerasCusrso(List<CarreraCurso> carreraCurso) {
         List<String> carreras = new ArrayList<>();
-        if(carreraCurso.isEmpty() || carreraCurso==null){
+        if (carreraCurso.isEmpty() || carreraCurso == null) {
             return null;
         }
-        for(CarreraCurso c : carreraCurso){
-            log.info("Nombre Carrera:{}",c.getCarrera().getNombre());
+        for (CarreraCurso c : carreraCurso) {
+            log.info("Nombre Carrera:{}", c.getCarrera().getNombre());
             carreras.add(c.getCarrera().getNombre());
         }
         return carreras;
     }
-    
-    public static List<HorarioRS> horarios (List<Horario> h){
-        List<HorarioRS> horarioRS= new ArrayList<>();
-        if(h.isEmpty()){
+
+    public static List<HorarioRS> horarios(List<Horario> h) {
+        List<HorarioRS> horarioRS = new ArrayList<>();
+        if (h.isEmpty()) {
             return null;
         }
-        for(Horario hor: h){
-            HorarioRS hrs= new HorarioRS();
+        for (Horario hor : h) {
+            HorarioRS hrs = new HorarioRS();
             hrs.setDia(hor.getDia());
             hrs.setHoraInicio(hor.getHoraInicio());
             hrs.setHoraFin(hor.getHoraFin());
-            log.info("Horario:{}",hrs);
+            log.info("Horario:{}", hrs);
             horarioRS.add(hrs);
         }
         return horarioRS;
     }
-    
+
 }

@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +23,16 @@ import lombok.Data;
 @Data
 @Builder
 public class MatriculaRQ {
-    
+
+    @NotNull
+    @ApiModelProperty(
+            value = "Correo del estudiante",
+            example = "juan@espe.edu.ec",
+            required = true
+    )
     private String correo;
     private Integer periodo;
     private List<Integer> cursos;
     private Integer matricula;
-    
+
 }

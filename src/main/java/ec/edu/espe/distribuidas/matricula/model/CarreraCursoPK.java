@@ -11,13 +11,13 @@
 package ec.edu.espe.distribuidas.matricula.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Data;
 
 /**
  * Representa a la clave primaria de la tabla CARRERA_CURSO
+ *
  * @author Usuario
  */
 @Embeddable
@@ -32,8 +32,5 @@ public class CarreraCursoPK implements Serializable {
 
     public CarreraCursoPK() {
     }
-    
-    
-    
-    
+
 }

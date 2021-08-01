@@ -18,9 +18,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface CarreraRepository extends JpaRepository<Carrera, Integer>{
-    
+public interface CarreraRepository extends JpaRepository<Carrera, Integer> {
+
     List<Carrera> findByNombreLikeOrderByNombre(String nombre);
-    
+
     List<Carrera> findByVigencia(String vigencia);
 }

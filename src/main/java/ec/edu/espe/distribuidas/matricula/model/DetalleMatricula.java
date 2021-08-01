@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,6 +30,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Representa a la clave primaria de la tabla DETALLE_MATRICULA
+ *
  * @author Usuario
  */
 @Entity
@@ -40,23 +40,22 @@ import lombok.NoArgsConstructor;
 public class DetalleMatricula implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_detalle_matricula", nullable = false)
     private Integer codigo;
-    
+
     /*@Column(name = "cod_curso", nullable = false)
     private Integer codigoCurso;
     
     @Column(name = "cod_matricula", nullable = false)
     private Integer codigoMatricula;*/
-  
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    
+
     @Column(name = "estado", length = 3)
     private String estado;
-    
+
     @JoinColumn(name = "cod_curso", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore

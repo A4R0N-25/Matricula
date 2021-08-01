@@ -21,12 +21,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface CursoRepository extends JpaRepository<Curso, Integer>{
-    
+public interface CursoRepository extends JpaRepository<Curso, Integer> {
+
     Optional<Curso> findByNrc(short nrc);
-    
+
     List<Curso> findByCupoGreaterThan(Integer cupo);
-    
+
     List<Curso> findByAsignaturaAndPeriodoOrderByNrc(Asignatura asignatura, Periodo periodo);
-    
+
 }

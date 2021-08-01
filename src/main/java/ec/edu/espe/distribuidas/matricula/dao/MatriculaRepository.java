@@ -22,10 +22,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface MatriculaRepository extends JpaRepository<Matricula, Integer>{
-    
+public interface MatriculaRepository extends JpaRepository<Matricula, Integer> {
+
     List<Matricula> findByFechaOrderByFechaDesc(Date fecha);
-    
+
     Optional<Matricula> findByEstudianteAndPeriodo(Estudiante estudiante, Periodo periodo);
-    
+
 }

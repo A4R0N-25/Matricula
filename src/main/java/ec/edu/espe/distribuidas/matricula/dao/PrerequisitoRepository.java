@@ -18,8 +18,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface PrerequisitoRepository extends JpaRepository<Prerequisito, Integer>{
-    
+public interface PrerequisitoRepository extends JpaRepository<Prerequisito, Integer> {
+
     List<Prerequisito> findByEstado(String estado);
-    
+
 }

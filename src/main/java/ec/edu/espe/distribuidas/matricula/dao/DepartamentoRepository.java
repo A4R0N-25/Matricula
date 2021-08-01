@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Usuario
  */
-public interface DepartamentoRepository extends JpaRepository<Departamento, Integer>{
-    
+public interface DepartamentoRepository extends JpaRepository<Departamento, Integer> {
+
     Departamento findByNombreLike(String nombre);
 }

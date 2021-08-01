@@ -17,6 +17,9 @@ import ec.edu.espe.distribuidas.matricula.exception.MatriculaConflictException;
 import ec.edu.espe.distribuidas.matricula.model.Matricula;
 import ec.edu.espe.distribuidas.matricula.service.MatriculaService;
 import ec.edu.espe.distribuidas.matricula.transoform.MatriculaTS;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +52,13 @@ public class MatriculaController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Matricular un estudiante en un periodo",
+            notes = "Matricula a un estudiante en diferentes materias en un periodo")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Matricula exitosa"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro algun registro"),
+        @ApiResponse(code = 409, message = "Conflic - No cumple con las reglas de negocio"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al intentar matricular")})
     public ResponseEntity matricularse(@RequestBody MatriculaRQ matriculaRQ) {
         try {
             return ResponseEntity.ok(this.matriculaService.matricularse(matriculaRQ));
@@ -62,6 +72,12 @@ public class MatriculaController {
         }
     }
 
+    @ApiOperation(value = "Buscar una matricula",
+            notes = "Buscar una matricula especifica por correo y periodo")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontro el registro"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problema interno del servidor")})
     @GetMapping
     public ResponseEntity buscarMatricula(@RequestParam String correo, @RequestParam Integer periodo) {
         try {
@@ -69,13 +85,19 @@ public class MatriculaController {
             MatriculaRS matriculaRS = MatriculaTS.matriculaRS(matricula);
             return ResponseEntity.ok(matriculaRS);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
     @GetMapping(value = "{correo}")
+    @ApiOperation(value = "Busca matriculas de un estudiante",
+            notes = "Busca todas las matriculas que le pertenecen a un estudiante")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al intentar matricular")})
     public ResponseEntity buscarMatriculasPorEstudiante(@PathVariable String correo) {
         try {
             List<Matricula> matriculas = this.matriculaService.obtenerMatriculasPorEstudiante(correo);
@@ -87,10 +109,18 @@ public class MatriculaController {
             return ResponseEntity.ok(matriculasRS);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     @DeleteMapping(value = "{id}")
+    @ApiOperation(value = "Elimina una materia de la matricula",
+            notes = "Elimina una materia especifica de una matricula")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se elimino exitosamente"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al intentar matricular")})
     public ResponseEntity borarrMatriculaDetalle(@PathVariable Integer id) {
         try {
             this.matriculaService.borrarDetalleMatricula(id);

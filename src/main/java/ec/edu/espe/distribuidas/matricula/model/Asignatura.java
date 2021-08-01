@@ -27,7 +27,8 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
- * Representa a la tabla ASIGNATURA
+ * Representa a la tabla CARRERA
+ *
  * @author Usuario
  */
 @Entity
@@ -46,7 +47,8 @@ public class Asignatura implements Serializable {
     @Column(name = "creditos", nullable = false)
     private short creditos;
     
-    @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, 
+            insertable = false, updatable = false)
     @ManyToOne
     private Departamento departamento;
     

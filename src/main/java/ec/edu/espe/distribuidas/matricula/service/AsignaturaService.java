@@ -33,13 +33,15 @@ public class AsignaturaService {
     private final AsignaturaPeriodoRepository asignaturaPeriodoRepository;
     private final DepartamentoRepository departamentoRepository;
 
-    public AsignaturaService(AsignaturaPeriodoRepository asignaturaPeriodoRepository, DepartamentoRepository departamentoRepository) {
+    public AsignaturaService(AsignaturaPeriodoRepository asignaturaPeriodoRepository,
+            DepartamentoRepository departamentoRepository) {
         this.asignaturaPeriodoRepository = asignaturaPeriodoRepository;
         this.departamentoRepository = departamentoRepository;
     }
 
     public List<Asignatura> obtenerAsignaturas(Integer codigoDepartamento, Integer codigoPeriodo) {
-        List<AsignaturaPeriodo> asignaturaPeriodo = this.asignaturaPeriodoRepository.findByPkCodigoPeriodo(codigoPeriodo);
+        List<AsignaturaPeriodo> asignaturaPeriodo
+                = this.asignaturaPeriodoRepository.findByPkCodigoPeriodo(codigoPeriodo);
         if (asignaturaPeriodo.isEmpty()) {
             throw new EntityNotFoundException("No se encontro el asignaturas en este periodo");
         }

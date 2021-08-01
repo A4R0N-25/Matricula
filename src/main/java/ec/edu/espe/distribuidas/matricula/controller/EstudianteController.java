@@ -73,12 +73,13 @@ public class EstudianteController {
     }
 
     @PutMapping("/{usuario}")
-    public ResponseEntity<Estudiante> editarEstudiante(@PathVariable String usuario, @RequestBody EstudianteEditarRS estudianteEditarRs) {
+    public ResponseEntity<Estudiante> editarEstudiante(@PathVariable String usuario,
+            @RequestBody EstudianteEditarRS estudianteEditarRs) {
         try {
             return ResponseEntity.ok(this.estudianteService.actualizarEstudiante(usuario, estudianteEditarRs));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }

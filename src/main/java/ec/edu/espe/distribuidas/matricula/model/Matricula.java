@@ -35,6 +35,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Representa a la clave primaria de la tabla MATRICULA
+ *
  * @author Usuario
  */
 @Entity
@@ -46,36 +47,34 @@ import lombok.NoArgsConstructor;
 public class Matricula implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_matricula", nullable = false)
     private Integer codigo;
- 
+
     /*@Column(name = "cod_estudiante", nullable = false)
     private Integer codigoEstudiante;
     
     @Column(name = "cod_periodo", nullable = false)
     private Integer codigoPeriodo;*/
-    
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
- 
+
     @Column(name = "creditos_totales", nullable = false, precision = 8, scale = 2)
     private BigDecimal creditosTotales;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
     @JsonManagedReference
     private List<DetalleMatricula> detalle;
-    
+
     @JoinColumn(name = "cod_estudiante", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JsonIgnore
     private Estudiante estudiante;
-    
+
     @JoinColumn(name = "cod_periodo", nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JsonIgnore
     private Periodo periodo;
 
-    
 }

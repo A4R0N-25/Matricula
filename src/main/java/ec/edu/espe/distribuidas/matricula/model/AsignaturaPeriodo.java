@@ -11,7 +11,6 @@
 package ec.edu.espe.distribuidas.matricula.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -21,7 +20,8 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
- * Representa a la tabla ASIGNATURA PERIODO
+ * Representa a la tabla CARRERA
+ *
  * @author Usuario
  */
 @Entity
@@ -34,11 +34,13 @@ public class AsignaturaPeriodo implements Serializable {
     @Column(name = "estado", length = 3)
     private String estado;
     
-    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, 
+            updatable = false)
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     
-    @JoinColumn(name = "cod_periodo", referencedColumnName = "cod_periodo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "cod_periodo", referencedColumnName = "cod_periodo", nullable = false, insertable = false, 
+            updatable = false)
     @ManyToOne(optional = false)
     private Periodo periodo;
 

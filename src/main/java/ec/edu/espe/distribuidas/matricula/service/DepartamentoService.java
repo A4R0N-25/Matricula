@@ -21,16 +21,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DepartamentoService {
-    
+
     private final DepartamentoRepository departamentoRepository;
 
     public DepartamentoService(DepartamentoRepository departamentoRepository) {
         this.departamentoRepository = departamentoRepository;
     }
-    
-    public List<Departamento> obtenerDepartamentos(){
+
+    public List<Departamento> obtenerDepartamentos() {
         List<Departamento> departamentos = this.departamentoRepository.findAll();
         return departamentos;
     }
-    
+
 }

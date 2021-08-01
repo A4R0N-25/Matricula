@@ -22,15 +22,15 @@ import java.util.List;
  * @author bran-
  */
 public class MatriculaTS {
-    
-    public static MatriculaRS matriculaRS(Matricula matricula){
+
+    public static MatriculaRS matriculaRS(Matricula matricula) {
         MatriculaRS matriculaRS = new MatriculaRS();
         matriculaRS.setCodigo(matricula.getCodigo());
         matriculaRS.setFecha(matricula.getFecha());
         matriculaRS.setCreditosTotales(matricula.getCreditosTotales());
         matriculaRS.setPeriodo(matricula.getPeriodo().getNombre());
         List<MatriculaDetalleRS> matriculaDetalles = new ArrayList<>();
-        for(DetalleMatricula detalleMatricula: matricula.getDetalle()){
+        for (DetalleMatricula detalleMatricula : matricula.getDetalle()) {
             MatriculaDetalleRS matriculaDetalleRS = MatriculaDetalleRS.builder()
                     .codigo(detalleMatricula.getCodigo())
                     .nrc(detalleMatricula.getCurso().getNrc())
@@ -43,5 +43,5 @@ public class MatriculaTS {
         matriculaRS.setDetalle(matriculaDetalles);
         return matriculaRS;
     }
-    
+
 }

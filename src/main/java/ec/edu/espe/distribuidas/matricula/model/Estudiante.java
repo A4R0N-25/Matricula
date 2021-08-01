@@ -24,7 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -64,7 +63,7 @@ public class Estudiante implements Serializable {
     private String correo;
 
     @Column(name = "contraseña", nullable = false, length = 260)
-    private String contraseña;
+    private String contrasena;
 
     @Column(name = "genero", nullable = false, length = 3)
     private String genero;

@@ -19,9 +19,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
-    
+public interface PeriodoRepository extends JpaRepository<Periodo, Integer> {
+
     List<Periodo> findByInicioOrderByInicioDesc(Date inicio);
-    
+
     Periodo findByNombreLike(String nombre);
 }

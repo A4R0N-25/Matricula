@@ -19,8 +19,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface HorarioRepository extends JpaRepository<Horario, Integer>{
-    
+public interface HorarioRepository extends JpaRepository<Horario, Integer> {
+
     List<Horario> findByDiaAndHoraInicioAndHoraFinOrderByDia(String dia, Date horaInicio, Date horaFin);
-    
+
 }

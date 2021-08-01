@@ -19,9 +19,10 @@ import org.springframework.data.jpa.repository.Query;
  *
  * @author bran-
  */
-public interface DetalleMatriculaRepository extends JpaRepository<DetalleMatricula, Integer>{
-    
-    @Query(value = "SELECT * FROM detalle_matricula d,matricula m, estudiante e where d.cod_matricula =m.cod_matricula and m.cod_estudiante=e.cod_estudiante and e.cod_estudiante = ?1", nativeQuery = true)
+public interface DetalleMatriculaRepository extends JpaRepository<DetalleMatricula, Integer> {
+
+    @Query(value = "SELECT * FROM detalle_matricula d,matricula m, estudiante e where d.cod_matricula =m.cod_matricula "
+            + "and m.cod_estudiante=e.cod_estudiante and e.cod_estudiante = ?1", nativeQuery = true)
     List<DetalleMatricula> findByEstudiante(Integer estudiante);
-    
+
 }

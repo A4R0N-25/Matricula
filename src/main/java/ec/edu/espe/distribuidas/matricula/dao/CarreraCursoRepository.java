@@ -18,6 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface CarreraCursoRepository extends JpaRepository<CarreraCurso, CarreraCursoPK>{
-    
+public interface CarreraCursoRepository extends JpaRepository<CarreraCurso, CarreraCursoPK> {
+
 }

@@ -23,7 +23,7 @@ public class LoginService {
         }
         Estudiante estudiante = estudianteOpt.get();
 
-        if (!estudiante.getContraseña().equals(loginDto.getPassword())) {
+        if (!estudiante.getContrasena().equals(loginDto.getPassword())) {
             throw new Exception("Contraseña Invalida");
         }
     }

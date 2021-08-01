@@ -13,14 +13,13 @@ package ec.edu.espe.distribuidas.matricula.transoform;
 import ec.edu.espe.distribuidas.matricula.dto.EstudianteRS;
 import ec.edu.espe.distribuidas.matricula.model.Estudiante;
 
-
 /**
  *
  * @author bran-
  */
 public class EstudianteTS {
-    
-    public static EstudianteRS estudianteRS(Estudiante estudiante){
+
+    public static EstudianteRS estudianteRS(Estudiante estudiante) {
         EstudianteRS estudianteRS = EstudianteRS.builder()
                 .tipo(estudiante.getTipoIdentificacion())
                 .identificacion(estudiante.getIdentificacion())
@@ -34,5 +33,5 @@ public class EstudianteTS {
                 .build();
         return estudianteRS;
     }
-    
+
 }

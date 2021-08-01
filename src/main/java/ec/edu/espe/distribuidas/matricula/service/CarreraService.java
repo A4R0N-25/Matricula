@@ -21,15 +21,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CarreraService {
-    
+
     private final CarreraRepository carreraRepository;
 
     public CarreraService(CarreraRepository carreraRepository) {
         this.carreraRepository = carreraRepository;
     }
-    
-    public List<Carrera> obtenerTodasCarreras(){
+
+    public List<Carrera> obtenerTodasCarreras() {
         return this.carreraRepository.findAll();
     }
-    
+
 }

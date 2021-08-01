@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +32,7 @@ import lombok.ToString;
 
 /**
  * Representa a la tabla CURSO
+ *
  * @author Usuario
  */
 @Entity
@@ -44,41 +44,38 @@ import lombok.ToString;
 public class Curso implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_curso", nullable = false)
-    private Integer codigo;    
- 
+    private Integer codigo;
+
     /*@Column(name = "cod_asignatura", nullable = false)
     private Integer codigoAsignatura;*/
-    
     @Column(name = "nrc", nullable = false)
     private short nrc;
- 
+
     @Column(name = "cupo", nullable = false)
     private short cupo;
-    
+
     @Column(name = "disponible", nullable = false)
     private short disponible;
-    
-   /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+
+    /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<DetalleMatricula> detalleMatriculas;*/
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     @JsonManagedReference
     private List<CarreraCurso> carreraCursos;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     @JsonManagedReference
     private List<Horario> horarios;
-    
+
     @JoinColumn(name = "cod_asignatura", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Asignatura asignatura;
-    
+
     @JoinColumn(name = "cod_periodo", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Periodo periodo;
 
-    
 }

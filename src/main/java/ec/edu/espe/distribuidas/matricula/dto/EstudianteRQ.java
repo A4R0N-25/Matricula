@@ -26,7 +26,7 @@ public class EstudianteRQ {
     private String nombre;
     private String apellido;
     private String correo;
-    private String contraseña;
+    private String contrasena;
     private String genero;
     private String telefono;
     private String direccion;

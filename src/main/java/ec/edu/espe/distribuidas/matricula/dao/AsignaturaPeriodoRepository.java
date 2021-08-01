@@ -19,8 +19,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface AsignaturaPeriodoRepository extends JpaRepository<AsignaturaPeriodo, AsignaturaPeriodoPK>{
-    
+public interface AsignaturaPeriodoRepository extends JpaRepository<AsignaturaPeriodo, AsignaturaPeriodoPK> {
+
     List<AsignaturaPeriodo> findByPkCodigoPeriodo(Integer codigoPeriodo);
-    
+
 }

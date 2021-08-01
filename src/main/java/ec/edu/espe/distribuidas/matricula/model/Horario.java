@@ -13,7 +13,6 @@ package ec.edu.espe.distribuidas.matricula.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +27,7 @@ import lombok.Data;
 
 /**
  * Representa a la tabla HORARIO
+ *
  * @author Usuario
  */
 @Entity
@@ -36,16 +36,16 @@ import lombok.Data;
 public class Horario implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_horario", nullable = false)
     private Integer codigo;
-    
+
     @Column(name = "cod_curso", nullable = false)
     private Integer codigoCurso;
 
     @Column(name = "dia", nullable = false, length = 3)
     private String dia;
- 
+
     @Column(name = "hora_inicio", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horaInicio;
@@ -53,13 +53,14 @@ public class Horario implements Serializable {
     @Column(name = "hora_fin", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horaFin;
-    
-    @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false,
+            updatable = false)
     @ManyToOne(optional = false)
     @JsonBackReference
     private Curso curso;
 
     public Horario() {
     }
- 
+
 }

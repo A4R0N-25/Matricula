@@ -14,10 +14,10 @@ package ec.edu.espe.distribuidas.matricula.exception;
  *
  * @author bran-
  */
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
 
     public EntityNotFoundException(String message) {
         super(message);
     }
-    
+
 }

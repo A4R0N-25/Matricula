@@ -20,13 +20,13 @@ import lombok.Data;
  */
 @Data
 public class CarreraTS {
-    
-    public static CarreraRS carreraTransform(Carrera carrera){
+
+    public static CarreraRS carreraTransform(Carrera carrera) {
         CarreraRS carreraRS = CarreraRS.builder()
                 .codigo(carrera.getCodigo())
-                .nombre(carrera.getModalidad()+ " - "+carrera.getNombre())
+                .nombre(carrera.getModalidad() + " - " + carrera.getNombre())
                 .build();
         return carreraRS;
     }
-    
+
 }

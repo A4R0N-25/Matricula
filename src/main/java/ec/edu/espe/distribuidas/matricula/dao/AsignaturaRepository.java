@@ -18,11 +18,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author bran-
  */
-public interface AsignaturaRepository extends JpaRepository<Asignatura, Integer>{
-    
+public interface AsignaturaRepository extends JpaRepository<Asignatura, Integer> {
+
     List<Asignatura> findByNombre(String nombre);
-    
+
     List<Asignatura> findByCreditosGreaterThan(Integer creditos);
-    
-    
+
 }

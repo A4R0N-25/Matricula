@@ -19,19 +19,18 @@ import org.springframework.stereotype.Service;
  *
  * @author bran-
  */
-
 @Service
 public class PeriodoService {
-    
+
     private final PeriodoRepository periodoRepository;
 
     public PeriodoService(PeriodoRepository periodoRepository) {
         this.periodoRepository = periodoRepository;
     }
-    
-    public List<Periodo> obtenerTodosPeriodos(){
+
+    public List<Periodo> obtenerTodosPeriodos() {
         List<Periodo> periodos = this.periodoRepository.findAll();
         return periodos;
     }
-    
+
 }

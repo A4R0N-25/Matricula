@@ -12,7 +12,6 @@ package ec.edu.espe.distribuidas.matricula.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -23,6 +22,7 @@ import lombok.Data;
 
 /**
  * Representa a la tabla CARRERA_CURSO
+ *
  * @author Usuario
  */
 @Entity
@@ -32,21 +32,22 @@ public class CarreraCurso implements Serializable {
 
     @EmbeddedId
     private CarreraCursoPK pk;
-    
-    @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "cod_curso", referencedColumnName = "cod_curso", nullable = false, insertable = false,
+            updatable = false)
     @ManyToOne(optional = false)
     @JsonBackReference
     private Curso curso;
-    
-    @JoinColumn(name = "cod_carrera", referencedColumnName = "cod_carrera", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "cod_carrera", referencedColumnName = "cod_carrera", nullable = false, insertable = false,
+            updatable = false)
     @ManyToOne(optional = false)
     private Carrera carrera;
-    
+
     @Column(name = "estado", nullable = false, length = 3)
     private String estado;
 
     public CarreraCurso() {
     }
 
-    
 }

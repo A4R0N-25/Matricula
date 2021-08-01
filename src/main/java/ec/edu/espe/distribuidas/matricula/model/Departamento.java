@@ -11,7 +11,6 @@
 package ec.edu.espe.distribuidas.matricula.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,17 +26,18 @@ import lombok.Data;
 @Entity
 @Table(name = "departamento")
 @Data
-public class Departamento implements Serializable{
+public class Departamento implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_departamento", nullable = false)
     private Integer codigo;
-    
+
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
-    
-    public Departamento(){
-        
+
+    public Departamento() {
+
     }
 
 }

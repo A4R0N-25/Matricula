@@ -37,7 +37,8 @@ public class CursoService {
     private final AsignaturaRepository asignaturaRepository;
     private final PeriodoRepository periodoRepository;
 
-    public CursoService(CursoRepository cursoRepository, AsignaturaRepository asignaturaRepository, PeriodoRepository periodoRepository) {
+    public CursoService(CursoRepository cursoRepository, AsignaturaRepository asignaturaRepository,
+            PeriodoRepository periodoRepository) {
         this.cursoRepository = cursoRepository;
         this.asignaturaRepository = asignaturaRepository;
         this.periodoRepository = periodoRepository;

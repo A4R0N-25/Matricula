@@ -41,9 +41,11 @@ public class AsignaturaController {
     }
 
     @GetMapping(value = "{codigoDepartamento}/{codigoPeriodo}")
-    public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, @PathVariable Integer codigoPeriodo) {
+    public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, 
+            @PathVariable Integer codigoPeriodo) {
         try {
-            List<Asignatura> asignaturas = this.asignaturaService.obtenerAsignaturas(codigoDepartamento, codigoPeriodo);
+            List<Asignatura> asignaturas = this.asignaturaService.obtenerAsignaturas(codigoDepartamento, 
+                    codigoPeriodo);
             List<AsignaturaRS> asignaturasRS = new ArrayList<>();
             for (Asignatura asig : asignaturas) {
                 asignaturasRS.add(AsignaturaTS.asignaturaRS(asig));

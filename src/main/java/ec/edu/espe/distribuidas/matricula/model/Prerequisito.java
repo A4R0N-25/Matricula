@@ -12,7 +12,6 @@ package ec.edu.espe.distribuidas.matricula.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +24,7 @@ import lombok.Data;
 
 /**
  * Representa a la tabla PRERREQUISITO
+ *
  * @author Usuario
  */
 @Entity
@@ -36,22 +36,24 @@ public class Prerequisito implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_prerequisito", nullable = false)
     private Integer codigo;
-    
+
     @Column(name = "cod_asignatura", nullable = false)
     private Integer codigoAsigantura;
-    
+
     @Column(name = "cod_asignatura_pre", nullable = false)
     private Integer codigoAsiganturaPrerrequsito;
- 
+
     @Column(name = "estado", nullable = false, length = 3)
     private String estado;
-    
-    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "cod_asignatura", referencedColumnName = "cod_asignatura", nullable = false,
+            insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonBackReference
     private Asignatura asignatura;
-    
-    @JoinColumn(name = "cod_asignatura_pre", referencedColumnName = "cod_asignatura", nullable = false, insertable = false, updatable = false)
+
+    @JoinColumn(name = "cod_asignatura_pre", referencedColumnName = "cod_asignatura", nullable = false,
+            insertable = false, updatable = false)
     @ManyToOne(optional = false)
     @JsonBackReference
     private Asignatura prerequisito;
