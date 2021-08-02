@@ -27,12 +27,32 @@ public class MatriculaRQ {
     @NotNull
     @ApiModelProperty(
             value = "Correo del estudiante",
-            example = "juan@espe.edu.ec",
+            example = "deyandun2@espe.edu.ec",
             required = true
     )
     private String correo;
+
+    @NotNull
+    @ApiModelProperty(
+            value = "Codigo de periodo",
+            example = "3",
+            required = true
+    )
     private Integer periodo;
+
+    @NotNull
+    @ApiModelProperty(
+            value = "Lista codigos de cursos",
+            example = "[25, 26, 27, 28]",
+            required = true
+    )
     private List<Integer> cursos;
+
+    @ApiModelProperty(
+            value = "Codigo de matricula",
+            example = "22",
+            required = true
+    )
     private Integer matricula;
 
 }

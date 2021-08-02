@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +23,20 @@ import lombok.Data;
 @Builder
 public class AsignaturaRS {
     
+    @NotNull
+    @ApiModelProperty(
+            value = "Codigo agisnatura",
+            example = "15",
+            required = true
+    ) 
     private Integer codigo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Nombre asignatura",
+            example = "Ecuaciones Diferenciales",
+            required = true
+    ) 
     private String nombre;
     
 }

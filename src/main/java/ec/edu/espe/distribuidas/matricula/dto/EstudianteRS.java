@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,14 +25,76 @@ import lombok.Data;
 @Builder
 public class EstudianteRS {
     
+    @NotNull
+    @ApiModelProperty(
+            value = "Tipo identificacion",
+            example = "CED",
+            required = true
+    )
     private String tipo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Identificacion estudiante",
+            example = "1714990965",
+            required = true
+    )    
     private String identificacion;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Nombre estudiante",
+            example = "Daniel Esteban",
+            required = true
+    )
     private String nombre;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Apellido estudiante",
+            example = "Yandun Quiroz",
+            required = true
+    )
     private String apellido;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Cooreo estudiante",
+            example = "deyandun2@espe.edu.ec",
+            required = true
+    )
     private String correo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Genero estudiante",
+            example = "MAS",
+            required = true
+    )
     private String genero;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Telefono estudiante",
+            example = "0223326587",
+            required = true
+    )
     private String telefono;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Direccion estudiante",
+            example = "VALLE",
+            required = true
+    )
     private String direccion;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Nombre carrera",
+            example = "Tecnologias de la Informacion",
+            required = true
+    )
     private String carrera;
     
 }

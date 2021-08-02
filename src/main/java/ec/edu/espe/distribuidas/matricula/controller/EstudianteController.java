@@ -17,6 +17,9 @@ import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.model.Estudiante;
 import ec.edu.espe.distribuidas.matricula.service.EstudianteService;
 import ec.edu.espe.distribuidas.matricula.transoform.EstudianteTS;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import javax.persistence.EntityExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -51,8 +54,7 @@ public class EstudianteController {
             notes = "Devuelve el correo registrado por el estudiante")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
-        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
-        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad")})
     public ResponseEntity obtenerDatosEstudiante(@PathVariable String correo) {
         try {
             Estudiante estudiante = this.estudianteService.obtenerEstudanterPorCorreo(correo);

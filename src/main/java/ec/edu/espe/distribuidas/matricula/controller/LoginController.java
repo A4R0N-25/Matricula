@@ -3,6 +3,9 @@ package ec.edu.espe.distribuidas.matricula.controller;
 import ec.edu.espe.distribuidas.matricula.dto.LoginDto;
 import ec.edu.espe.distribuidas.matricula.exception.EntityNotFoundException;
 import ec.edu.espe.distribuidas.matricula.service.LoginService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +27,12 @@ public class LoginController {
     @ApiOperation(value = "Realiza la autenticacion del estudiante",
             notes = "Permite autenticar las credenciales de un estudiante para el ingreso al sistema")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = ""),
+        @ApiResponse(code = 200, message = "ok - Logeo Exitoso"),
         @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
-        @ApiResponse(code = 500, message = "Bad Request")})
+        @ApiResponse(code = 400, message = "Bad Request - Contrasena incorrecta ")})
     public ResponseEntity login(@RequestBody LoginDto loginDto) {
-        try {
-            //log.info("Usurio:{}", loginDto);
-            this.loginService.authenticacion(loginDto);
-            //log.info("Validacion: {}", verificacion);
+        try {            
+            this.loginService.authenticacion(loginDto);    
             return ResponseEntity.ok().build();
 
         } catch (EntityNotFoundException e) {

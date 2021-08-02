@@ -191,7 +191,7 @@ public class MatriculaService {
                     DetalleMatricula detalleMatriculaNueva = new DetalleMatricula();
                     detalleMatriculaNueva.setMatricula(matricula);
                     detalleMatriculaNueva.setCurso(curso);
-                    detalleMatriculaNueva.setEstado("REP");
+                    detalleMatriculaNueva.setEstado("CUR");
                     detalleMatriculaNueva.setFecha(new Date());
                     creditos += curso.getAsignatura().getCreditos();
                     log.info("Creditos:{}", creditos);
@@ -210,10 +210,6 @@ public class MatriculaService {
         matricula.setCreditosTotales(BigDecimal.valueOf(creditos));
         matricula.setDetalle(detalleMatriculas);
         matricula.setPeriodo(periodo.get());
-        /*for(DetalleMatricula d : matricula.getDetalle()){
-            d.setMatricula(matricula);
-        }*/
-        //log.info("Detalles Matriculas: {}",matricula);
         matricula.setFecha(new Date());
         if (detalleMatriculas.size() > 0) {
             this.matriculaRepository.save(matricula);

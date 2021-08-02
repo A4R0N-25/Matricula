@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,8 +23,28 @@ import lombok.Data;
 @Builder
 public class PeriodoRS {
     
+    @NotNull
+    @ApiModelProperty(
+            value = "Devuelve el codigo",
+            example = "4",
+            required = true
+    ) 
     private Integer codigo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Devuelve el nombre",
+            example = "PREGRADO S-I MRZ19-JUL19",
+            required = true
+    ) 
     private String nombre;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Devuelve el estado",
+            example = "ACT",
+            required = true
+    ) 
     private String estado;
     
 }

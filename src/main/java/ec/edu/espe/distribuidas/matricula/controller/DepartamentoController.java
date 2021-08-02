@@ -12,6 +12,9 @@ package ec.edu.espe.distribuidas.matricula.controller;
 
 import ec.edu.espe.distribuidas.matricula.model.Departamento;
 import ec.edu.espe.distribuidas.matricula.service.DepartamentoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

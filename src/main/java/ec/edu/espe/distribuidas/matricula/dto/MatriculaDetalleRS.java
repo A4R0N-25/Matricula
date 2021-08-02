@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,10 +23,44 @@ import lombok.Data;
 @Builder
 public class MatriculaDetalleRS {
     
+    @NotNull
+    @ApiModelProperty(
+            value = "Codigo matricula",
+            example = "22",
+            required = true
+    )
     private Integer codigo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "NRC asignatura",
+            example = "4000",
+            required = true
+    )
     private short nrc;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Nombre asignatura",
+            example = "Ecuaciones Diferenciales",
+            required = true
+    )
     private String materia;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Cantidad de creditos",
+            example = "24",
+            required = true
+    )
     private short creditos;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Estado materia",
+            example = "REP",
+            required = true
+    )
     private String estado;
     
 }

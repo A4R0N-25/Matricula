@@ -10,6 +10,8 @@
  */
 package ec.edu.espe.distribuidas.matricula.dto;
 
+import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +23,20 @@ import lombok.Data;
 @Builder
 public class CarreraRS {
     
+    @NotNull
+    @ApiModelProperty(
+            value = "Codigo carrera",
+            example = "3",
+            required = true
+    ) 
     private Integer codigo;
+    
+    @NotNull
+    @ApiModelProperty(
+            value = "Nombre carrera",
+            example = "Tecnologias de la Informacion",
+            required = true
+    ) 
     private String nombre;
     
 }
