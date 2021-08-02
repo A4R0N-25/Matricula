@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/curso/")
+@RequestMapping("/v1/curso/")
 @CrossOrigin
 public class CursoController {
 
@@ -38,6 +38,12 @@ public class CursoController {
     }
 
     @GetMapping(value = "{codigoAsignatura}/{codigoPeriodo}")
+    @ApiOperation(value = "Busca los cursos donde se dictan las asignaturas",
+            notes = "Devuelve todos los cursos donde se dictan clases para cada una de las asignaturas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity obneterCursos(@PathVariable Integer codigoAsignatura, @PathVariable Integer codigoPeriodo) {
         try {
             List<CursoRS> cursos = this.cursoService.obtenerCursos(codigoAsignatura, codigoPeriodo);
@@ -50,6 +56,12 @@ public class CursoController {
     }
 
     @GetMapping(value = "{nrc}")
+    @ApiOperation(value = "Busca las asignaturas por NRC",
+            notes = "Busca cualquier asignatura que el estudiante desea matricularse por NRC")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity buscarNRC(@PathVariable short nrc) {
         try {
             CursoRS cursoRS = this.cursoService.buscarPorNrc(nrc);

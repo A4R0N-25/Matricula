@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/periodo/")
+@RequestMapping("/v1/periodo/")
 @CrossOrigin
 public class PeriodoController {
 
@@ -38,6 +38,12 @@ public class PeriodoController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Busca un listado de periodos academicos",
+            notes = "Devuelve una lista de peridos academicos")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity obtenerPeriodos() {
         try {
             List<Periodo> periodos = this.periodoService.obtenerTodosPeriodos();

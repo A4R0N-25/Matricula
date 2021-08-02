@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/asignatura/")
+@RequestMapping("/v1/asignatura/")
 @CrossOrigin
 public class AsignaturaController {
 
@@ -41,6 +41,13 @@ public class AsignaturaController {
     }
 
     @GetMapping(value = "{codigoDepartamento}/{codigoPeriodo}")
+    @ApiOperation(value = "Busca las asignaturas impartidas por un departamento",
+            notes = "Devuelve todas las asignaturas que son impartidas por un departamento"
+                    + "en un periodo determinado")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity obtenerAsignaturas(@PathVariable Integer codigoDepartamento, 
             @PathVariable Integer codigoPeriodo) {
         try {

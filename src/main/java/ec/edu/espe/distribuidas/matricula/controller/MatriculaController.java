@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/matricula/")
+@RequestMapping("/v1/matricula/")
 @CrossOrigin
 @Slf4j
 public class MatriculaController {

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/departamento")
+@RequestMapping("/v1/departamento")
 @CrossOrigin
 public class DepartamentoController {
 
@@ -35,6 +35,12 @@ public class DepartamentoController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Busca un departamento de una carrera",
+            notes = "Devuelve una lista de departamentos que pertenece a una carrera")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     public ResponseEntity obtenerDepartamento() {
         try {
             List<Departamento> departamentos = this.departamentoService.obtenerDepartamentos();

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @Slf4j
-@RequestMapping("/api/login")
+@RequestMapping("/v1/login")
 public class LoginController {
 
     private final LoginService loginService;
@@ -21,6 +21,12 @@ public class LoginController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Realiza la autenticacion del estudiante",
+            notes = "Permite autenticar las credenciales de un estudiante para el ingreso al sistema")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = ""),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Bad Request")})
     public ResponseEntity login(@RequestBody LoginDto loginDto) {
         try {
             //log.info("Usurio:{}", loginDto);

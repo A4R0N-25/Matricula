@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author bran-
  */
 @RestController
-@RequestMapping("/api/carrera")
+@RequestMapping("/v1/carrera")
 @CrossOrigin
 public class CarreraController {
 
@@ -38,6 +38,12 @@ public class CarreraController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Busca las carreras disponibles",
+            notes = "Devuelve todas las carreras disponibles para el estudiante")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
+        @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
+        @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
     private ResponseEntity obtenerCarreras() {
         try {
             List<Carrera> carreras = this.carreraService.obtenerTodasCarreras();
