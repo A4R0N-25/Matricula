@@ -38,7 +38,7 @@ public class CursoRS {
             example = "4000",
             required = true
     )
-    private short nrc;
+    private Short nrc;
     
     @NotNull
     @ApiModelProperty(
@@ -46,7 +46,7 @@ public class CursoRS {
             example = "20",
             required = true
     )
-    private short cupo;
+    private Short cupo;
     
     @NotNull
     @ApiModelProperty(
@@ -62,7 +62,7 @@ public class CursoRS {
             example = "12",
             required = true
     )
-    private short disponible;
+    private Short disponible;
     
     @NotNull
     @ApiModelProperty(
@@ -70,7 +70,7 @@ public class CursoRS {
             example = "4",
             required = true
     )
-    private short creditos;
+    private Short creditos;
     
     @NotNull
     @ApiModelProperty(

@@ -45,7 +45,6 @@ public class CursoTS {
             return null;
         }
         for (CarreraCurso c : carreraCurso) {
-            log.info("Nombre Carrera:{}", c.getCarrera().getNombre());
             carreras.add(c.getCarrera().getNombre());
         }
         return carreras;
@@ -61,7 +60,6 @@ public class CursoTS {
             hrs.setDia(hor.getDia());
             hrs.setHoraInicio(hor.getHoraInicio());
             hrs.setHoraFin(hor.getHoraFin());
-            log.info("Horario:{}", hrs);
             horarioRS.add(hrs);
         }
         return horarioRS;

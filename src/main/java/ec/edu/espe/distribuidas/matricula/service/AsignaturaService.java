@@ -45,7 +45,6 @@ public class AsignaturaService {
         if (asignaturaPeriodo.isEmpty()) {
             throw new EntityNotFoundException("No se encontro el asignaturas en este periodo");
         }
-        //log.info("Por periodo:{}",asignaturaPeriodo);
         Optional<Departamento> departamento = this.departamentoRepository.findById(codigoDepartamento);
 
         if (departamento.isEmpty()) {
@@ -53,8 +52,6 @@ public class AsignaturaService {
         }
         List<Asignatura> asignaturas = new ArrayList<>();
         for (AsignaturaPeriodo asig : asignaturaPeriodo) {
-            //log.info("Asignatura: {}",asig.getAsignatura());
-            //log.info("Departamento:{}", departamento.get());
             if (asig.getAsignatura().getDepartamento().equals(departamento.get())) {
                 asignaturas.add(asig.getAsignatura());
             }

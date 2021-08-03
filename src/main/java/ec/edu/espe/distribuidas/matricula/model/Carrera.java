@@ -45,7 +45,7 @@ public class Carrera implements Serializable {
     private String vigencia;
 
     @Column(name = "niveles", nullable = false)
-    private short niveles;
+    private Short niveles;
 
     @Column(name = "modalidad", nullable = false, length = 3)
     private String modalidad;

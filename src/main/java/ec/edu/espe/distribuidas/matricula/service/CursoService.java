@@ -62,7 +62,7 @@ public class CursoService {
         return cursosRS;
     }
 
-    public CursoRS buscarPorNrc(short nrc) {
+    public CursoRS buscarPorNrc(Short nrc) {
         Optional<Curso> curso = this.cursoRepository.findByNrc(nrc);
         if (curso.isEmpty()) {
             throw new EntityNotFoundException("No se encontro el nrc: " + nrc);

@@ -45,7 +45,7 @@ public class Asignatura implements Serializable {
     private String nombre;    
   
     @Column(name = "creditos", nullable = false)
-    private short creditos;
+    private Short creditos;
     
     @JoinColumn(name = "cod_departamento", referencedColumnName = "cod_departamento", nullable = false, 
             insertable = false, updatable = false)

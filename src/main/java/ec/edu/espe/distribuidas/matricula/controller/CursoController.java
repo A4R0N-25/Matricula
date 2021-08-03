@@ -65,7 +65,7 @@ public class CursoController {
         @ApiResponse(code = 200, message = "Ok - Se encontraron los registros"),
         @ApiResponse(code = 404, message = "Not Found - No se encontro una entidad"),
         @ApiResponse(code = 500, message = "Internal Server Error - Problemas al realizar la busqueda")})
-    public ResponseEntity buscarNRC(@PathVariable short nrc) {
+    public ResponseEntity buscarNRC(@PathVariable Short nrc) {
         try {
             CursoRS cursoRS = this.cursoService.buscarPorNrc(nrc);
             return ResponseEntity.ok(cursoRS);

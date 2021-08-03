@@ -72,7 +72,6 @@ public class EstudianteService {
     }
 
     public Estudiante obtenerEstudanterPorCorreo(String correo) {
-        log.info(correo);
         Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(correo);
         log.info("Nombre: {}", estudianteOpt.get().getApellido());
         if (estudianteOpt.isEmpty()) {

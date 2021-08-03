@@ -51,13 +51,13 @@ public class Curso implements Serializable {
     /*@Column(name = "cod_asignatura", nullable = false)
     private Integer codigoAsignatura;*/
     @Column(name = "nrc", nullable = false)
-    private short nrc;
+    private Short nrc;
 
     @Column(name = "cupo", nullable = false)
-    private short cupo;
+    private Short cupo;
 
     @Column(name = "disponible", nullable = false)
-    private short disponible;
+    private Short disponible;
 
     /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private List<DetalleMatricula> detalleMatriculas;*/

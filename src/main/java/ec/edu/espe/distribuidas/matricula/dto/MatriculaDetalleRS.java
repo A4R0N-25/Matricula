@@ -37,7 +37,7 @@ public class MatriculaDetalleRS {
             example = "4000",
             required = true
     )
-    private short nrc;
+    private Short nrc;
     
     @NotNull
     @ApiModelProperty(
@@ -53,7 +53,7 @@ public class MatriculaDetalleRS {
             example = "24",
             required = true
     )
-    private short creditos;
+    private Short creditos;
     
     @NotNull
     @ApiModelProperty(

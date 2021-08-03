@@ -73,7 +73,12 @@ public class MatriculaService {
                 matricula = new Matricula();
             }
         }
+
         List<DetalleMatricula> detalleMatriculas = new ArrayList<>();
+
+        if (matricula.getCodigo() != null) {
+            detalleMatriculas = matricula.getDetalle();
+        }
 
         Optional<Estudiante> estudianteOpt = this.estudianteRepository.findByCorreo(matriculaRQ.getCorreo());
         if (estudianteOpt.isEmpty()) {
@@ -111,8 +116,6 @@ public class MatriculaService {
                 }
             }
 
-            log.info("curso periodo:{}", curso.getPeriodo());
-            log.info("periodo matricula:_{}", periodo.get());
             if (!curso.getPeriodo().equals(periodo.get())) {
                 errorCursos.add("El curso con el NRC: " + curso.getNrc() + " no pertenece al mismo periodo");
                 continue;
@@ -131,12 +134,23 @@ public class MatriculaService {
 
             boolean carrera = false;
             boolean prerequisito = false;
+            boolean materiaPasada = false;
             int numeroPre = 0;
 
             List<DetalleMatricula> materiasEstudiante
                     = this.detalleMatriculaRepository.findByEstudiante(estudiante.getCodigo());
 
-            log.info("Detalles OP:{}", materiasEstudiante);
+            for (DetalleMatricula detMatricula : materiasEstudiante) {
+                if (detMatricula.getCurso().getAsignatura().equals(curso.getAsignatura())) {
+                    materiaPasada = true;
+                    break;
+                }
+            }
+
+            if (materiaPasada) {
+                errorCursos.add("Materia ya pasada");
+                continue;
+            }
 
             for (Prerequisito pre : curso.getAsignatura().getPrerequisitos()) {
                 for (DetalleMatricula detMatricula : materiasEstudiante) {
@@ -155,7 +169,6 @@ public class MatriculaService {
             }
 
             for (CarreraCurso carreraCurso : curso.getCarreraCursos()) {
-                log.info("Carrera verificacion:{}", carreraCurso.getCarrera().getNombre());
                 if (carreraCurso.getCarrera().equals(estudiante.getCarrera())) {
                     carrera = true;
                     break;
@@ -168,13 +181,13 @@ public class MatriculaService {
 
             boolean ver = false;
             if ((curso.getAsignatura().getPrerequisitos().isEmpty() || prerequisito)
-                    && (curso.getCarreraCursos().isEmpty() || carrera)) {
+                    && (curso.getCarreraCursos().isEmpty() || carrera) && !materiaPasada) {
                 for (DetalleMatricula detalleMatricula : detalleMatriculas) {
                     for (Horario horarioActual : curso.getHorarios()) {
                         List<Horario> horariosChoque = detalleMatricula.getCurso().getHorarios()
                                 .stream().filter(horario -> horario.getDia().equals(horarioActual.getDia())
-                                && horario.getHoraInicio().after(horarioActual.getHoraFin())
-                                && horario.getHoraFin().before(horarioActual.getHoraInicio()))
+                                && horario.getHoraInicio().before(horarioActual.getHoraFin())
+                                && horario.getHoraFin().after(horarioActual.getHoraInicio()))
                                 .collect(Collectors.toList());
                         if (!horariosChoque.isEmpty()) {
                             log.error("El curso:" + curso.getNrc() + " se choca con uno o mas cursos actuales");
@@ -194,7 +207,6 @@ public class MatriculaService {
                     detalleMatriculaNueva.setEstado("CUR");
                     detalleMatriculaNueva.setFecha(new Date());
                     creditos += curso.getAsignatura().getCreditos();
-                    log.info("Creditos:{}", creditos);
                     curso.setDisponible((short) (curso.getDisponible() - 1));
 
                     detalleMatriculas.add(detalleMatriculaNueva);
@@ -205,8 +217,6 @@ public class MatriculaService {
 
         matricula.setEstudiante(estudiante);
 
-        log.info("CreditosDes:{}", creditos);
-        log.info("Errores:{}", errorCursos);
         matricula.setCreditosTotales(BigDecimal.valueOf(creditos));
         matricula.setDetalle(detalleMatriculas);
         matricula.setPeriodo(periodo.get());

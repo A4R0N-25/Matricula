@@ -61,7 +61,7 @@ public class EstudianteController {
             EstudianteRS estudianteRS = EstudianteTS.estudianteRS(estudiante);
             return ResponseEntity.ok(estudianteRS);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
 
